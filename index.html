@@ -160,12 +160,12 @@ html[data-theme="light"]{
   --shadow-soft:0 10px 26px -18px rgba(13,17,23,.25);
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;overflow-x:hidden;max-width:100%}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;overflow-x:clip;max-width:100%}
 body{
   margin:0;padding:0;
   font-family:"Noto Sans SC",-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;
   color:var(--ink);background:var(--bg);
-  overflow-x:hidden;max-width:100%;
+  overflow-x:clip;max-width:100%;
   -webkit-font-smoothing:antialiased;
   transition:background .3s,color .3s;
 }
@@ -479,6 +479,14 @@ html[data-theme="light"] .proto-badge{color:#FFFFFF}
   font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.1em;color:var(--dim2);
 }
 .pitem .pmeta em{font-style:normal;color:var(--violet);font-weight:700;white-space:nowrap}
+/* 投稿作者署名：让粉丝一眼看到是谁给的 */
+.pitem .byline{
+  align-self:flex-start;display:inline-flex;align-items:center;gap:4px;
+  font-size:11px;font-weight:800;letter-spacing:.08em;line-height:1;
+  color:var(--gold);background:rgba(255,194,75,.13);
+  border:1px solid rgba(255,194,75,.42);padding:4px 8px;
+  max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
 /* 投稿扩展包：必须叠加在原作基础设定上使用 */
 .pitem.pack{border-color:rgba(255,194,75,.42);background:linear-gradient(160deg,rgba(255,194,75,.07),transparent 62%);grid-column:span 2}
 .pitem.pack:hover{border-color:rgba(255,194,75,.7)}
@@ -616,15 +624,54 @@ html[data-theme="light"] .panel-act .btn-primary{color:#FFFFFF}
   opacity:0;pointer-events:none;transition:.25s;white-space:nowrap;box-shadow:var(--shadow-soft);
 }
 .toast.on{opacity:1;transform:translate(-50%,0)}
-@media(max-width:640px){
-  .hero-ring{width:170px;right:-72px;top:0;opacity:.75}
+@media(max-width:760px){
+  /* 顶栏：窄屏收缩，固定在顶部不跟随滚动 */
+  .topbar{padding:10px 14px;gap:10px;box-shadow:0 6px 18px -14px rgba(0,0,0,.5)}
+  .logo{width:28px;height:28px;font-size:13px}
+  .brand b{font-size:13px;letter-spacing:.02em}
+  .brand span{display:none}
+  .status{display:none}
+  .icon-btn{width:34px;height:34px;border-radius:6px}
+  /* Hero：去掉右侧装饰环（窄屏会压住标题），字号下调 */
+  .hero{padding:24px 16px 0}
+  .hero-ring{display:none}
+  .hero-tag{font-size:9px;padding:5px 9px;letter-spacing:.14em}
+  .hero h1{margin-top:14px;font-size:clamp(30px,10.5vw,46px)}
+  .hero h1 .l1{font-size:.30em;letter-spacing:.1em;margin-bottom:.6em}
+  .hero h1 .l2{line-height:1.06}
+  .hero-en{font-size:9.5px;letter-spacing:.2em;margin-top:14px}
+  .hero-desc{margin-top:12px;font-size:13.5px;line-height:1.8}
+  .hero-stats{gap:18px;margin-top:18px}
+  .stat b{font-size:24px}
+  .stat span{font-size:9px;letter-spacing:.12em}
+  .hero-cta{margin-top:20px;gap:8px}
+  .hero-cta .btn{flex:1 1 100%;height:44px;font-size:13.5px}
+  /* 筛选区 */
+  .toolbar{margin:22px 16px 0;padding-top:14px;gap:10px}
+  .chips{width:100%;gap:6px;-webkit-overflow-scrolling:touch}
+  .chip{height:34px;padding:0 12px;font-size:12.5px}
+  .search{margin-left:0;flex:1 1 100%;max-width:none}
+  .grid-wrap{padding:14px 16px 0}
+  .grid{grid-template-columns:1fr;gap:10px}
+  .card{min-height:0;padding:16px}
+  /* 插件工坊 */
+  .workshop{padding:26px 16px;margin-top:34px}
+  .ws-head{gap:8px}
+  .ws-desc{font-size:13px}
+  .proto{padding:16px;margin-top:18px}
+  .proto h3{font-size:15.5px}
+  .proto .proto-act .btn{flex:1 1 100%;height:38px}
+  .lanes{margin-top:22px}
+  .pgrid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+  .pitem{padding:12px 13px}
+  .pitem.pack{grid-column:span 2}
+  .foot{padding:24px 16px}
 }
 @media(max-width:520px){
   .hero-side{display:none}
-  .hero-desc{font-size:13px}
-  .card{min-height:160px}
-  .status{display:none}
-  .foot{padding-bottom:40px}
+  .hero h1{font-size:clamp(28px,11.5vw,40px)}
+  .pgrid{grid-template-columns:1fr}
+  .pitem.pack{grid-column:span 1}
   .panel-act .btn{flex:1 1 100%}
 }
 @media(prefers-reduced-motion:reduce){
@@ -642,7 +689,7 @@ html[data-theme="light"] .panel-act .btn-primary{color:#FFFFFF}
 <div class="boot-flash" id="flash"></div>
 
 <header class="topbar">
-  <div class="logo">仮</div>
+  <div class="logo">特</div>
   <div class="brand">
     <b>特摄同人 · 设定库</b>
     <span>TOKUSATSU / SETTING ARCHIVE</span>
@@ -663,7 +710,7 @@ html[data-theme="light"] .panel-act .btn-primary{color:#FFFFFF}
   <div class="hero-ring" aria-hidden="true">
     <div class="ring-layer r1"></div>
     <div class="ring-layer r2"></div>
-    <div class="hero-hex">仮</div>
+    <div class="hero-hex">特</div>
   </div>
   <div class="hero-tag"><span class="dot"></span>ARCHIVE <span id="upd">—</span></div>
   <h1>
@@ -959,23 +1006,25 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
     }
     function items(arr, withBy){
       return (arr||[]).map(function(p){
-        var by = (p.by && withBy) ? (' · ' + p.by) : '';
+        var byline = (p.by && withBy) ? ('<span class="byline">作者 · '+esc(p.by)+'</span>') : '';
         if(p.kind === 'pack'){
           var lst = (p.files||[]).map(function(f){
             return '<a href="'+encPath(f.path)+'" download="'+esc(f.name)+'" title="'+esc(f.name)+'">'+esc(f.title||f.name)+'</a>';
           }).join('');
           return '<div class="pitem pack">'
+            + byline
             + '<div class="dep">扩展包 · 依赖《'+esc(p.dep||'原作')+'》</div>'
             + '<h4>'+esc(p.title)+'</h4>'
             + '<p class="depnote">不能单独开局：先加载《'+esc(p.dep||'原作')+'》的 00 号基础设定，再加载这个包。</p>'
             + '<ul class="packfiles">'+lst+'</ul>'
             + '<a class="btn btn-ghost" href="'+encPath(p.zip)+'" download="'+esc(p.title||'扩展包')+'.zip">打包下载 · '+(p.count||0)+' 份 · '+fmtKB(p.kb)+'</a>'
-            + '<div class="pmeta"><span>PACK · '+(p.count||0)+' 份'+by+'</span><em>下载 ↓</em></div>'
+            + '<div class="pmeta"><span>PACK · '+(p.count||0)+' 份</span><em>下载 ↓</em></div>'
             + '</div>';
         }
         return '<a class="pitem" href="'+encPath(p.path)+'" download="'+esc(p.name)+'">'
+          + byline
           + '<h4>'+esc(p.title)+'</h4>'
-          + '<div class="pmeta"><span>'+esc((p.ext||'').toUpperCase())+' · '+fmtKB(p.kb)+by+'</span><em>下载 ↓</em></div>'
+          + '<div class="pmeta"><span>'+esc((p.ext||'').toUpperCase())+' · '+fmtKB(p.kb)+'</span><em>下载 ↓</em></div>'
           + '</a>';
       }).join('');
     }
