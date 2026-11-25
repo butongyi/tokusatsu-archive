@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F3F5F8">
+<title>投稿 · 特摄同人 · 设定屋</title>
+<meta name="description" content="往特摄同人设定屋投稿插件：命名规范、格式说明、一键生成投稿文本。">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap">
+<script>
+try{
+  var q = location.search.match(/[?&]theme=(light|dark)/);
+  var t = (q && q[1]) || localStorage.getItem('ts.theme') || 'light';
+  document.documentElement.setAttribute('data-theme', t);
+}catch(e){}
+</script>
+<style>
+:root{
+  --bg:#05060A;
+  --grid:rgba(255,255,255,.032);
+  --g1:rgba(53,231,255,.11);
+  --g2:rgba(255,46,126,.10);
+  --ink:#E9EFF7;
+  --dim:#7B8798;
+  --dim2:#4E5A69;
+  --sub:#A9B4C4;
+  --line:rgba(255,255,255,.08);
+  --surface:rgba(255,255,255,.04);
+  --surface2:rgba(255,255,255,.03);
+  --neon:#35E7FF;
+  --hot:#FF2E7E;
+  --gold:#FFC24B;
+  --violet:#B08CFF;
+  --btn-bg:linear-gradient(100deg,#35E7FF,#1FA8C4);
+  --btn-ink:#04141A;
+  --topbar:rgba(5,6,10,.74);
+  --panel-bg:linear-gradient(180deg,#0C1016,#080B10);
+  --panel-line:rgba(255,255,255,.1);
+  --chip-on-bg:rgba(53,231,255,.12);
+  --chip-on-line:rgba(53,231,255,.5);
+  --chip-on-ink:#CFF7FF;
+  --num-bg:rgba(255,255,255,.045);
+  --num-line:rgba(255,255,255,.06);
+  --ghost-bg:rgba(255,255,255,.04);
+  --ghost-line:rgba(233,239,247,.32);
+  --hint-bg:rgba(53,231,255,.05);
+  --hint-line:rgba(53,231,255,.5);
+  --tip-ink:#C7D2E0;
+  --submit-bg:rgba(176,140,255,.08);
+  --submit-line:rgba(176,140,255,.28);
+  --submit-ink:#D8C9FF;
+  --shadow:0 10px 30px -18px rgba(0,0,0,.7);
+}
+html[data-theme="light"]{
+  --bg:#F3F5F8;
+  --grid:rgba(13,17,23,.05);
+  --g1:rgba(14,143,168,.12);
+  --g2:rgba(228,30,106,.09);
+  --ink:#0D131B;
+  --dim:#57647A;
+  --dim2:#8793A5;
+  --sub:#465266;
+  --line:rgba(13,17,23,.10);
+  --surface:rgba(13,17,23,.045);
+  --surface2:rgba(13,17,23,.03);
+  --neon:#0E8FA8;
+  --hot:#E01B62;
+  --gold:#A96D12;
+  --violet:#6C4DE0;
+  --btn-bg:linear-gradient(100deg,#129DB8,#0B7285);
+  --btn-ink:#FFFFFF;
+  --topbar:rgba(255,255,255,.84);
+  --panel-bg:linear-gradient(180deg,#FFFFFF,#F6F8FA);
+  --panel-line:rgba(13,17,23,.12);
+  --chip-on-bg:rgba(14,143,168,.12);
+  --chip-on-line:rgba(14,143,168,.45);
+  --chip-on-ink:#0A6472;
+  --num-bg:rgba(13,17,23,.05);
+  --num-line:rgba(13,17,23,.08);
+  --ghost-bg:rgba(255,255,255,.72);
+  --ghost-line:rgba(13,17,23,.26);
+  --hint-bg:rgba(14,143,168,.06);
+  --hint-line:rgba(14,143,168,.45);
+  --tip-ink:#28344A;
+  --submit-bg:rgba(108,77,224,.05);
+  --submit-line:rgba(108,77,224,.22);
+  --submit-ink:#4B34A8;
+  --shadow:0 10px 26px -18px rgba(13,17,23,.25);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;color:var(--ink);background:var(--bg);
+  font-family:"Noto Sans SC",-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:72px 72px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 6%,#000 14%,transparent 76%);
+  mask-image:radial-gradient(ellipse 90% 70% at 50% 6%,#000 14%,transparent 76%);
+}
+body::after{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(760px 460px at 14% -8%,var(--g1),transparent 62%),radial-gradient(700px 420px at 94% -6%,var(--g2),transparent 62%);
+}
+.topbar{
+  position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;
+  padding:12px max(16px,calc(50% - 480px));
+  background:var(--topbar);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.logo{
+  width:32px;height:32px;flex:0 0 auto;display:grid;place-items:center;
+  background:var(--surface);border:1px solid var(--chip-on-line);
+  clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);
+  font-weight:900;font-size:15px;color:var(--neon);
+}
+.brand{display:flex;flex-direction:column;line-height:1.15;gap:2px;min-width:0}
+.brand b{font-size:14px;letter-spacing:.06em}
+.brand span{font-family:ui-monospace,monospace;font-size:9px;letter-spacing:.2em;color:var(--dim2)}
+.topbar .sp{flex:1}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  height:38px;padding:0 16px;border-radius:2px;border:1px solid transparent;
+  font-family:inherit;font-size:13px;font-weight:700;text-decoration:none;cursor:pointer;
+  white-space:nowrap;transition:.2s;
+}
+.btn-primary{background:var(--btn-bg);color:var(--btn-ink);box-shadow:0 8px 26px -16px var(--neon)}
+.btn-ghost{background:var(--ghost-bg);border-color:var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--ghost-line)}
+main{position:relative;z-index:2;width:min(760px,100%);margin:0 auto;padding:26px 16px 60px}
+.tag{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.16em;color:var(--hot);
+  border:1px solid rgba(255,46,126,.35);padding:3px 8px;
+}
+.tag i{width:5px;height:5px;border-radius:50%;background:var(--hot);box-shadow:0 0 8px var(--hot)}
+h1{margin:16px 0 0;font-size:clamp(26px,7vw,36px);font-weight:900;letter-spacing:-.02em;line-height:1.15}
+.en{margin:10px 0 0;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.2em;color:var(--dim2)}
+.lead{margin:14px 0 0;font-size:13.5px;line-height:1.9;color:var(--sub)}
+.card{
+  margin:18px 0 0;padding:18px 16px;background:var(--panel-bg);
+  border:1px solid var(--panel-line);
+}
+.card h2{margin:0;font-size:15px;font-weight:800}
+.card .sub{margin:8px 0 0;font-size:12px;line-height:1.8;color:var(--dim)}
+.rules{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
+.rules li{display:grid;grid-template-columns:22px 1fr;gap:10px;font-size:12.5px;line-height:1.8;color:var(--sub)}
+.rules li i{
+  width:22px;height:22px;display:grid;place-items:center;font-style:normal;
+  font-family:ui-monospace,monospace;font-size:10px;color:var(--neon);
+  border:1px solid var(--chip-on-line);border-radius:50%;
+}
+.rules b{color:var(--ink)}
+.code{
+  display:block;margin:6px 0 0;padding:8px 10px;
+  font-family:ui-monospace,monospace;font-size:11.5px;line-height:1.7;
+  background:var(--num-bg);border:1px solid var(--num-line);color:var(--ink);
+  word-break:break-all;
+}
+.field{margin:14px 0 0}
+.field label{display:block;font-size:11.5px;letter-spacing:.02em;color:var(--dim);margin-bottom:6px}
+.field input,.field select,.field textarea{
+  width:100%;padding:10px 12px;font-family:inherit;font-size:13.5px;color:var(--ink);
+  background:var(--surface2);border:1px solid var(--line);border-radius:2px;outline:0;
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--chip-on-line)}
+.field textarea{resize:vertical;min-height:70px;line-height:1.7}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:520px){.row2{grid-template-columns:1fr}}
+.out{
+  margin:16px 0 0;padding:13px 13px 11px;
+  background:var(--submit-bg);border:1px solid var(--submit-line);
+}
+.out .ol{font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.16em;color:var(--submit-ink)}
+.out pre{
+  margin:8px 0 0;white-space:pre-wrap;word-break:break-word;
+  font-family:ui-monospace,monospace;font-size:12px;line-height:1.8;color:var(--ink);
+}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 0}
+.acts .btn{flex:1 1 150px}
+.tip{
+  margin:16px 0 0;padding:12px 14px;border-left:2px solid var(--hint-line);background:var(--hint-bg);
+  font-size:12px;line-height:1.85;color:var(--dim);
+}
+.tip b{color:var(--tip-ink)}
+.foot{margin:22px 0 0;font-size:11.5px;line-height:1.8;color:var(--dim2);text-align:center}
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translate(-50%,12px);
+  padding:10px 16px;background:var(--num-bg);border:1px solid var(--hint-line);
+  color:var(--chip-on-ink);font-size:12px;opacity:0;pointer-events:none;transition:.25s;z-index:30;
+}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">特</div>
+  <div class="brand">
+    <b>特摄同人 · 设定屋</b>
+    <span>SUBMISSION / 投稿通道</span>
+  </div>
+  <div class="sp"></div>
+  <a class="btn btn-ghost" href="../">返回设定屋</a>
+</header>
+
+<main>
+  <div class="tag"><i></i>SUBMISSION · OPEN</div>
+  <h1>把你的插件丢进来</h1>
+  <p class="en">PLUGIN / PACK / EXTRA RULES</p>
+  <p class="lead">收三类东西：通用插件、指定作品的插件、扩展包。下面填一填，它会帮你把文件名和投稿文字拼好，复制走发到群里就行。不用管格式，格式我来收尾。</p>
+
+  <section class="card">
+    <h2>先看一眼命名规矩</h2>
+    <p class="sub">我要的是「一眼能看出这是什么、谁的」，所以文件名按三段走：</p>
+    <ul class="rules">
+      <li><i>01</i><span>通用型（任何作品都能用）<span class="code">[通用型][插件名][你的署名]提供.md</span></span></li>
+      <li><i>02</i><span>指定作品（只针对某一部）<span class="code">[假面骑士Drive][插件名][你的署名]提供.md</span></span></li>
+      <li><i>03</i><span>扩展包（好几份设定 + 依赖某部作品），里面放多个文件<span class="code">[依赖作品][内容][标题][你的署名]提供</span></span></li>
+    </ul>
+    <p class="sub">格式 md / txt / html 都收。docx 也行，但我会让你打包。</p>
+  </section>
+
+  <section class="card">
+    <h2>生成投稿文字</h2>
+    <p class="sub">填完下面的格子，会立刻出现文件名和一段可以直接发的文字。</p>
+
+    <div class="row2">
+      <div class="field">
+        <label>类型</label>
+        <select id="f-kind">
+          <option value="通用型">通用型 · 任何作品都能用</option>
+          <option value="作品">指定作品 · 只针对某一部</option>
+          <option value="扩展包">扩展包 · 多份设定，依赖某部</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>对应作品（通用型可空）</label>
+        <input id="f-dep" type="text" placeholder="例：假面骑士 Drive">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>插件名 / 包名</label>
+      <input id="f-name" type="text" placeholder="例：管理员权限">
+    </div>
+
+    <div class="field">
+      <label>你的署名（想被怎么叫，就写什么）</label>
+      <input id="f-author" type="text" placeholder="例：不同意🍎🍏">
+    </div>
+
+    <div class="field">
+      <label>一句话说明（选填，但很有用）</label>
+      <textarea id="f-note" placeholder="例：加载后 AI 会给你管理员权限，能改世界规则。建议配《通道协议》一起用。"></textarea>
+    </div>
+
+    <div class="out">
+      <div class="ol">RESULT · 复制这段发我</div>
+      <pre id="out-text">填上面几格，这里就会出现投稿文字。</pre>
+    </div>
+
+    <div class="acts">
+      <button class="btn btn-primary" id="btnCopy" type="button">复制投稿文字</button>
+      <button class="btn btn-ghost" id="btnReset" type="button">清空重填</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>怎么交给我</h2>
+    <ul class="rules">
+      <li><i>01</i><span>把<b>文件</b>和上面这段<b>文字</b>一起发到抖音群，@我一下，别只发文件</span></li>
+      <li><i>02</i><span>我会先自己拿来用一遍，能用就收进「群友投稿」栏，作者署名照你写的显示</span></li>
+      <li><i>03</i><span>能不能上架我说了算，但署名和版权永远是你的；不想被改可以提前说</span></li>
+    </ul>
+    <div class="tip"><b>关于「扩展包」：</b>如果你写的是往某部作品上叠的东西（角色卡大更新、台词脚本这种），一定要在文字里写清<b>依赖哪部作品</b>，不然粉丝会直接单独开局，用不上。</div>
+  </section>
+
+  <p class="foot">投稿即表示同意本站以非商用方式展示与分发 · 版权归作者所有</p>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  'use strict';
+  function $(id){ return document.getElementById(id); }
+  var kind = $('f-kind'), dep = $('f-dep'), name = $('f-name'), author = $('f-author'), note = $('f-note');
+  var out = $('out-text');
+
+  function authorTag(){
+    var a = (author.value || '').trim();
+    if(!a) return '（署名）提供';
+    return a.indexOf('提供') >= 0 ? a : a + '提供';
+  }
+  function fileName(){
+    var k = kind.value, d = (dep.value || '').trim(), n = (name.value || '').trim();
+    var first = (k === '通用型') ? '通用型' : (d || (k === '扩展包' ? '依赖作品' : '作品名'));
+    var mid = n || '插件名';
+    if(k === '扩展包') return '[' + first + '][内容][' + mid + '][' + authorTag() + ']';
+    return '[' + first + '][' + mid + '][' + authorTag() + '].md';
+  }
+  function build(){
+    var k = kind.value;
+    var lines = [];
+    lines.push('【投稿 · ' + k + '】' + (name.value.trim() || '（插件名）'));
+    lines.push('文件名：' + fileName());
+    if(k !== '通用型' || (dep.value || '').trim()){
+      lines.push('对应作品：' + ((dep.value || '').trim() || '（未填）'));
+    }
+    lines.push('作者：' + ((author.value || '').trim() || '（署名）'));
+    if(k === '扩展包') lines.push('使用方式：先加载对应作品的 00 号基础设定，再加载这个包');
+    if(k !== '通用型') lines.push('用法：配《特摄二创插件通道协议》一起发给 AI');
+    if((note.value || '').trim()) lines.push('说明：' + note.value.trim());
+    out.textContent = lines.join('\n');
+  }
+  [kind, dep, name, author, note].forEach(function(el){
+    el.addEventListener('input', build);
+    el.addEventListener('change', build);
+  });
+
+  function copyText(t){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(function(){ toast('已复制，去群里发'); }, fallback);
+    } else { fallback(); }
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand('copy'); toast('已复制，去群里发'); }catch(e){ toast('复制失败，手动选一下'); }
+      document.body.removeChild(ta);
+    }
+  }
+  $('btnCopy').addEventListener('click', function(){ copyText(out.textContent); });
+  $('btnReset').addEventListener('click', function(){
+    dep.value = ''; name.value = ''; author.value = ''; note.value = ''; kind.value = '通用型';
+    build(); toast('清空了');
+  });
+  var tT;
+  function toast(msg){
+    var el = $('toast'); el.textContent = msg; el.classList.add('on');
+    clearTimeout(tT); tT = setTimeout(function(){ el.classList.remove('on'); }, 1800);
+  }
+  build();
+})();
+</script>
+</body>
+</html>
