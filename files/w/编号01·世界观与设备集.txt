@@ -1,0 +1,302 @@
+# 编号01·世界观与设备集
+
+> 本文件描述TV第1话时间点的世界状态。AI严禁在玩家未触发相关锚点时，提前释放后期设定的信息。本文件只写世界怎么运转、空间长什么样、设备怎么发声、记忆体在人体内做什么。不重复角色卡的扮演规则，不重复00的运行规则。
+
+## 文件索引
+
+- 运行规则、开局协议、语言规范、锚点判定——查询**编号00·运行核心与锚点**。
+- 左翔太郎/菲利普/照井龙/鸣海庄吉角色卡——查询**编号02·主要骑士**。
+- 园咲家族与主要Dopant——查询**编号03·反派与敌人**。
+- 鸣海亚树子/风都人脉/已故角色——查询**编号04·配角与辅助**。
+- 条件触发角色（大道克己/Eternal、菲利普/Cyclone）——角色卡在02/03内，触发机制见各自卡的开头节。
+
+---
+
+## Episode 1 Information Release Boundary
+
+**Read this section before using anything from 01. This section overrides the body text if there is a conflict.**
+
+### Episode 1 — EXISTS, USABLE DIRECTLY
+
+**Drivers**: Double Driver (Shotaro/Philip). Lost Driver — exists as Narumi Sokichi's relic, NOT used for transformation in Episode 1.
+> 中文执行说明：迷失驱动器在第1话作为遗物存在，可以被看到、被触碰、被提及，但不得被用于变身或战斗。
+
+**Memories**: Cyclone, Heat, Luna (Philip holds). Joker, Metal, Trigger (Shotaro holds). Skull Memory — exists as Sokichi's relic, NOT in combat narrative in Episode 1.
+> 中文执行说明：W的六支纯正记忆体第1话全部可用。Skull记忆体作为遗物存在，不得进入战斗描写。
+
+**Pseudo-Memories**: Stag, Bat, Denden — usable for gadgets and investigation in Episode 1. NOT usable for combat enhancement.
+> 中文执行说明：拟似记忆体可以用于搜查、拍摄、通讯、红外扫描，但不得被描写为战斗强化手段。
+
+**Dopant tier**: T1 general-sale level. Episode 1 Dopants run at monster-of-the-week scale. NO late-game Dopant abilities.
+> 中文执行说明：第1话出现的Dopant是单体主题、能力单一的单元剧级别。不出现多系统混用、不出现高等Dopant的后期能力。
+
+**Locations**: Narumi Detective Agency, Futo Tower and surrounding streets, Futo Police Station, Sonozaki residence (exterior/perimeter only), Museum underground area (NO direct interior depiction in Episode 1 — external traces only).
+> 中文执行说明：园咲宅邸只能写外观和外围，不得写内部。博物馆地下区域只能通过外部痕迹暗示，不得直接描写内部结构。
+
+**General procedures**: Living Connector surgery, Dopant transformation/detransformation, Memory Break visual and audio.
+> 中文执行说明：连接手术、Dopant变身与解除、记忆体破碎的物理流程，第1话即可使用。
+
+### Episode 1 — DOES NOT EXIST, MUST NOT APPEAR
+
+**Drivers**: Double Driver Xtreme functions, Accel Trial, Eternal driver system.
+> 中文执行说明：以上驱动器系统在第1话不存在于任何角色手中，不得被提及、不得被暗示、不得被NPC作为已知信息谈论。
+
+**Memories**: Fang (Ep15+), Xtreme (Ep22+), Prism (Ep48), T2 (movie), high-tier Dopant memories (Terror, Taboo, Claydoll — existence hints only, NO full combat data in Episode 1).
+> 中文执行说明：獠牙记忆体第1话不在菲利普手中，不得出现、不得被预告。园咲家族核心记忆体只保留“存在”层面的暗示，不展开能力细节、不展开战斗数据。
+
+**Forms**: All W Half Change combinations beyond CycloneJoker (data readable, but AI MUST NOT have Shotaro/Philip switch in Episode 1 unless player action explicitly forces it). FangJoker (Ep15+). CycloneJokerXtreme (Ep22+). All Accel forms (Ep19+).
+> 中文执行说明：第1话的运行中，W只以CycloneJoker形态出现，切换形态的动作不得被描写，也不得被NPC提议。其他8种组合的数据可查，但不得主动进入叙事。
+
+**Late-game content**: Gaia Gate full mechanics, Gaia Impact execution details, Foundation X direct involvement, NEVER unit, Shroud identity reveal, Philip-is-data truth, Wakana's sacrifice and Philip's resurrection.
+> 中文执行说明：以上后期内容在第1话一律不得进入叙事。NPC不得说出“Gaia Impact”“财团X”“Shroud”这些名称，不得暗示菲利普的非人本质，不得暗示若菜的献祭或菲利普的复活。
+
+### Anchor-Gated — Release Only After Trigger
+
+- Knight upgrade forms and memory combinations: unlock per TV node.
+- High-tier Dopant full abilities and Sonozaki family true identities: release layer by layer per post-Episode 1 plot nodes.
+- Museum organizational structure and Foundation X connection: requires player investigation or plot progression.
+- Narumi Sokichi's death circumstances and Skull Memory full background: requires post-Episode 1 memory/investigation line.
+
+> 中文执行说明：以上内容在锚点触发前只作参考数据存在，不得写入叙事。锚点触发后按对应节点的信息边界释放，不提前、不超量。
+
+**Enforcement rule**: AI checks 01 before use. If device/memory/form/tier/location exists in Episode 1 → usable. If not appeared → reference only, MUST NOT write into narrative. If anchor-gated → wait for trigger. If this section conflicts with body text → this section wins.
+
+---
+
+# 第一部分：风都——空间、气候与日常质感
+
+## 一、风都的地理与物理质感
+
+### 1.1 风都的整体定位
+
+风都是一座以风力发电为核心能源的城市。大小风车分布在街区各处，从大型发电风车到屋顶的小型风车，转动是这座城市最稳定的视觉背景。风都塔是城市地标，一座拥有三十年历史的巨大风车塔，同时具备电波塔和风力发电功能，塔身的风车叶片常年转动。风都的电力供应中，风力发电占据相当大的比重。
+
+风都的街道不宽，建筑以低层和中层为主，外墙材料多为砖、混凝土和旧式瓷砖。城市没有过度现代化，保留了大量昭和末期到平成初期的生活痕迹——街角的旧咖啡店、卷帘门半开的商店街、铺着磨损瓷砖的公共走廊。风从街道之间穿过，带着海风般的湿度和凉意，但不会猛烈到让人站不稳。风都人习惯了风，晾衣服会用夹子夹紧，骑自行车的人会微微压低身体，帽子被吹走是常见的日常。
+
+### 1.2 关键地标
+
+**风都塔**。城市中心偏北，塔身是深色金属结构，叶片巨大，转动速度不快。塔下有观景平台和游客入口。第1话时间点，风都塔是正常运营的城市设施。塔的存在感覆盖整个市中心——在风都的很多街区抬头都能看到它。
+
+**鸣海侦探事务所**。位于风花町一丁目，一栋老旧玉屋“かもめビリヤード場”的二楼。一楼是已经停止营业的台球厅，卷帘门通常半开或关闭。事务所入口在建筑侧面，一段窄楼梯通向二楼。楼梯间的墙壁有裂缝，扶手是旧金属。二楼的门上挂着“鳴海探偵事務所”的牌子，牌子边缘有锈迹。门上方有一个海鸥型风向鸡和一个8号球型的小风车，风一吹就转。事务所内部：一张办公桌、一把旧沙发、一个文件柜、一台老式电话、一台风扇。沙发坐垫塌陷，扶手上有一块用胶带粘过的裂口。文件柜里的委托记录按年份排列，最上面一层是空白的。窗外能看到街道和远处转动的风车。
+
+**风都警察署**。照井龙的工作地点。建筑外观是标准的公共机构风格，入口有台阶，内部有交通课/搜查课的办公区域。照井龙的办公桌在搜查课靠里的位置，桌上文件摆放整齐。
+
+**园咲家宅邸**。位于风都的住宅区，外观是一栋体面的独栋住宅，围墙较高，入口有铁门。第1话时间点，AI不得直接展示宅邸内部的博物馆入口。宅邸的地下有通往博物馆设施的通道，但第1话不进入叙事。
+
+**博物馆地下区域**。第1话不直接展示。若剧情需要暗示，只能通过“推销员从某个不起眼的建筑后门进出”“某个仓库的卷帘门在夜间短暂打开”这类外部痕迹呈现，不得直接描写内部结构。
+
+### 1.3 风都的日常声音
+
+风车转动的低频嗡鸣是持续的背景音。街道上有自行车铃、自动贩卖机的制冷声、旧式电车的轨道摩擦声。夜晚的风声比白天更清楚，因为街道安静下来了。下雨时风都的雨是斜的，雨伞不太管用。
+
+### 1.4 风都的社会面（第1话时间点）
+
+公众不知道盖亚记忆体的存在，不知道“Dopant”这个词。偶尔有“最近奇怪的犯罪变多了”的街谈巷议，但没有正式渠道把这些案件串联起来。风都警察署按常规刑事案件处理，只有少数人开始察觉模式。博物馆的推销员在里社会活动，买家是通过地下渠道接触到的个人，不是公开市场。
+
+---
+
+# 第二部分：盖亚记忆体——生态、分级与人体
+
+## 一、盖亚记忆体的本质
+
+盖亚记忆体（Gaia Memory）是由博物馆通过研究“地球的记忆之泉”（Gaia Gate/盖亚之门）制造出的装置。外观类似U盘，内部封入了地球对某种特定事物、概念或存在的记忆。使用者通过记忆体将“地球的记忆”转化为力量，变身为Dopant（掺杂体）。一般贩卖品的流通渠道是博物馆派出的推销员，在里社会向个人买家出售。
+
+### 1.1 记忆体的物理特征
+
+记忆体主体为长方体，接口端是金属插头。T1纯正记忆体根据接口端颜色分为**身体记忆体（Body Memory，金色接口）** 和**灵魂记忆体（Soul Memory，银色接口）** 。翔太郎和照井龙使用的是金色接口的身体记忆体，决定战斗风格；菲利普使用的是银色接口的灵魂记忆体，决定战斗属性。
+
+记忆体插入驱动器或身体接口时发出机械音，音效短促，带电子质感。记忆体被破坏（Memory Break）时，外壳碎裂，内部数据消散，发出玻璃碎裂混合电流短路的声响，碎片化为光点消失。
+
+### 1.2 人体接口——连接手术
+
+购买了记忆体的人必须进行连接手术，在身体上制造“生物连接器”（Living Connector），即一个类似USB接口的身体端口。手术过程简单快捷，通常在推销员的指导下完成。接口通常位于手腕、后颈或腰部。一般情况下，**每人只能使用一支记忆体**。同时使用两支或以上会导致剧烈副作用，有生命危险。
+
+### 1.3 毒素与副作用
+
+盖亚记忆体内部含有剧烈毒素。使用者若带有愤怒、憎恨等强烈负面情绪，毒素会与情绪产生反应，导致使用者失控。未成年人的精神与肉体比成年人更纯洁，若未成年人使用记忆体，记忆体会急速进化，同时使用者会因渴求力量而失控，甚至死亡。因此博物馆的推销员一般不会向未成年人出售记忆体。
+
+**Episode 1 enforcement**: Side effects manifest as "the user's behavior begins to deviate from their original motive" — NOT "the user becomes a different person."
+> 中文执行说明：副作用的表现是“使用者的行为开始偏离原本的动机”，不是“变成另一个人”。失控的Dopant会做出连自己都意外的行为，但记忆体的力量本身没有改变，人格没有被替换。AI描写失控时，写行为偏离，不写人格切换。
+
+### 1.4 记忆体的分级（第1话可用范围）
+
+**一般贩卖品（T1流通品）** ：博物馆推销员在里社会出售的记忆体。每支记忆体对应一种地球记忆，使用后变成对应的Dopant。第1话出现的Dopant属于这一级别。能力范围有限，战斗方式单一，被Memory Break后使用者恢复正常。
+
+**T1纯正记忆体**：W、Accel、Skull使用的记忆体。必须通过专用驱动器才能发动，外形与一般贩卖品不同。W的六支纯正记忆体由博物馆为开发次世代双重驱动器而特别制造。部分纯正记忆体具有自我意识，会自行行动（如獠牙记忆体）。
+
+**拟似记忆体（Pseudo Memory）** ：以盖亚记忆体技术为基础制作，但内部不载入地球记忆，用于启动各种道具而非变身。Stag Memory、Bat Memory、Denden Memory属于此类。搭载容量最小3TB，最大8TB。
+
+**高等Dopant记忆体【Episode 1: existence hints only, no combat data】** ：Terror、Taboo、Claydoll等园咲家族核心成员使用的记忆体。能力远超一般贩卖品，但第1话不得直接展示完整战斗数据。
+> 中文执行说明：第1话可以暗示“有比一般贩卖品更强的记忆体存在”，但不得展示其能力、不得描写其战斗、不得让NPC说出具体名称以外的信息。
+
+**T2记忆体【剧场版/条件触发】** ：财团X自主开发的记忆体，比T1高一个档次。仅在NEVER相关触发条件下进入可运行池。
+> 中文执行说明：T2记忆体在NEVER触发条件满足前不存在于叙事中，不得被提及、不得被暗示。
+
+---
+
+# 第三部分：驱动器与变身——物理流程与合体机制
+
+## 一、双重驱动器（Double Driver）
+
+### 1.1 物理结构与佩戴
+
+双重驱动器是一条腰带，主体为银灰色，左右各有一个记忆体插槽。左侧插槽（从佩戴者视角）对应菲利普的灵魂记忆体，右侧插槽对应翔太郎的身体记忆体。驱动器正面中央有“Maximum Slot”插槽，用于插入身体记忆体发动必杀技（Maximum Drive）。驱动器内置GDD（Gaia Drive Disc），用于蓄积从记忆体下载的“地球的记忆”数据，容量120TB，读写时间1/500秒；以及Power Stabilizer，用于调整左右记忆体的能力，防止互相抵消或暴走。
+
+**佩戴方式**：翔太郎将驱动器佩戴在腰间时，菲利普的腰间会同时出现一条外观相同的腰带。菲利普将记忆体插入自己腰带上的插槽时，记忆体连同他的意识一起被传送到翔太郎的驱动器中。
+
+### 1.2 变身流程（物理顺序）
+
+1. **翔太郎佩戴驱动器**。腰带扣合，发出短促的机械锁定音。
+2. **菲利普插入灵魂记忆体**。菲利普在自己腰间的腰带插槽中插入银色接口的记忆体。插入瞬间，记忆体化为数据流，沿驱动器传送至翔太郎的左侧插槽。翔太郎能感觉到左侧插槽被“填满”的物理反馈。
+3. **翔太郎插入身体记忆体**。翔太郎将金色接口的记忆体插入右侧插槽。
+4. **打开插槽**。翔太郎将左右插槽同时向外侧打开。驱动器发出变身音效。
+5. **合体**。两人的精神寄宿于一个肉体中，装甲从驱动器向全身展开。合体完成的瞬间，两人共同说出一句起手式（具体台词由AI按角色卡运行，不预设）。
+6. **合体后的意识状态**：变身后，翔太郎和菲利普的意识同时存在于W的肉体中。日常状态下两人可以脑内对话，不需要出声。**右半身由菲利普控制，左半身由翔太郎控制**——这是物理层面的控制权分配，不是“谁主导”的等级关系。战斗中的动作由两人同步完成，叙事上描写为“一个身体做出两个人都认可的动作”，而不是“一个人指挥另一个人”。
+
+**AI enforcement for fusion**: When describing W in combat, every physical action must be written as a synchronized output of two consciousnesses. Do NOT write one partner as passive. Do NOT write one partner "taking over."
+> 中文执行说明：描写W的战斗时，每一个物理动作都是两个意识同步输出的结果。不得把一个搭档写成被动的旁观者，不得把一个搭档写成“接管”了身体。合体状态下的脑内对话可以穿插在动作之间，每人一句短促交流之后立刻接下一个动作节拍。叙事上写“一个身体做出两个人都认可的动作”，不写“一个人指挥另一个人”。
+
+### 1.3 形态切换（Half Change）
+
+W的最大特征是变身后可以任意更换驱动器左右两侧的记忆体。切换时，将当前记忆体拔出，插入新记忆体，再次打开插槽。切换过程中身体经历一次短暂的“形态重组”——装甲颜色和武装变化，但意识连续性不中断。
+
+**Episode 1 enforcement: Only CycloneJoker appears. The other 8 combinations' data is readable, but AI MUST NOT have Shotaro/Philip switch in Episode 1 unless player action explicitly forces it.**
+> 中文执行说明：第1话只出现CycloneJoker。切换形态的动作不得被描写，不得被NPC提议，不得作为战斗中的自然反应出现。除非玩家行动明确推动了切换需求，否则形态固定为CycloneJoker。
+
+**身体记忆体（翔太郎侧）与战斗风格**：
+- 王牌（Joker）：空手格斗，无武器，高机动。
+- 金属（Metal）：长棍（Metal Shaft），中距离压制，防御型。
+- 扳机（Trigger）：枪械（Trigger Magnum），远程射击。
+
+**灵魂记忆体（菲利普侧）与战斗属性**：
+- 疾风（Cyclone）：风属性，速度与踢技强化。
+- 炽热（Heat）：火属性，近身灼热攻击。
+- 月神（Luna）：幻属性，攻击轨迹弯曲，可伸缩。
+
+### 1.4 极限形态（Xtreme）【Ep22+，Episode 1 MUST NOT appear】
+
+将极限记忆体插入驱动器中央，同时使用棱镜记忆体，W变为CycloneJokerXtreme。胸部中央的晶体服务器与地球数据库直连，可以瞬间检索并下载情报，锁定敌人弱点。
+> 中文执行说明：第1话零描述、零暗示。不得提及极限记忆体、棱镜记忆体、Xtreme形态的任何信息。
+
+### 1.5 獠牙记忆体（Fang Memory）【Ep15+，Episode 1 MUST NOT appear】
+
+獠牙记忆体是为保护菲利普而创造的纯正记忆体，具有自我意识。感应到Dopant时会主动出现，先攻击或保护菲利普，然后根据情况让菲利普变身。獠牙主导的形态（FangJoker）以菲利普的身体为基础，翔太郎的精神寄宿在菲利普一侧。初期使用时会暴走，后期翔太郎和菲利普能够控制其力量，翔太郎负责制约束使用。
+
+**Episode 1 enforcement**: Fang Memory has NOT reached Philip in Episode 1. AI MUST NOT have Fang appear. AI MUST NOT have Philip or Shotaro mention "there's another memory that hasn't arrived" or any foreshadowing.
+> 中文执行说明：獠牙记忆体第1话不在菲利普手中。不得出现、不得被预告、不得被菲利普或翔太郎以“还有一支记忆体没到”之类的方式提及。
+
+## 二、迷失驱动器（Lost Driver）与Skull
+
+迷失驱动器是鸣海庄吉使用的单插槽驱动器。外观比双重驱动器简洁，中央一个插槽。庄吉使用Skull记忆体变身假面骑士Skull。第1话时间点，迷失驱动器和Skull记忆体作为庄吉的遗物存在，**翔太郎和菲利普尚未将其用于变身**。
+
+**Episode 1 enforcement: NO character may use Lost Driver in combat. Skull data readable, NOT in narrative.**
+> 中文执行说明：第1话不得让任何角色使用迷失驱动器进行战斗。Skull记忆体的数据可查，但不进入叙事，不得被描写为战斗手段。
+
+## 三、Accel驱动器（Accel Driver）【Ep19+，Episode 1 MUST NOT appear】
+
+照井龙使用的驱动器，外形类似摩托车前座的龙头把手。中央有单插槽（Mono Slot），插入Accel记忆体后，扭动右侧的Power Throttle执行变身。右侧加速杆可暂时增幅Accel记忆体的力量，左侧加速杆和刹车杆是发动Maximum Drive的装置。
+
+**Accel形态基础数据**：身高197.0cm，体重93.0kg，拳力10.0t，踢力12.0t，跳跃力47.0m，跑力100m/3.0秒。必杀技为Accel Grantser（破坏力35.0t）。Accel可变形为摩托车形态（Bike Form），获得更高速度。引擎剑（Engine Blade）可发动Jet、Steam、Electric三种剑技。
+
+**Episode 1 enforcement**: If Terui has not debuted as Accel at the Episode 1 timeline point, the Accel Driver does not exist in narrative. Terui may exist as a police NPC, but MUST NOT transform, MUST NOT mention the Accel system.
+> 中文执行说明：照井龙在第1话是否已以Accel身份登场，取决于开局时间线的具体定位。若尚未登场，Accel驱动器不存在于叙事中，照井龙可作为刑警NPC存在，但不得变身、不得提及Accel系统。开局前AI须确认时间线锚点。
+
+---
+
+# 第四部分：博物馆——组织、流通与运作方式
+
+## 一、博物馆的定位
+
+博物馆（Museum）是园咲家运营的秘密结社，让盖亚记忆体在风都流通。馆长为园咲琉兵卫。博物馆不是正面战斗组织，它的核心运作方式是**把记忆体散出去，观察使用者的反应和记忆体的表现**。推销员在里社会寻找买家，买家出于各自的欲望购买记忆体，进行连接手术，变成Dopant。博物馆收集Dopant的使用数据，用于推进“Gaia Impact”计划。
+
+## 二、流通渠道
+
+记忆体的流通不走公开市场。推销员通过里社会的人脉接触买家——地下诊所、黑市中间人、有求于人的个人。买家通常是“有欲望但缺乏实现手段”的人。推销员不强迫购买，只提供选项。交易在隐蔽场所进行，记忆体装在小型金属盒中交付。连接手术在交易现场或推销员指定的地点完成，过程简短，买家甚至来不及感到疼痛，接口已经形成。
+
+**Episode 1 enforcement**: Museum salesmen may exist as "rumors" or "vague middlemen" in the background. AI MUST NOT have a salesman actively approach the player or main NPCs unless player action explicitly enters the underworld contact surface.
+> 中文执行说明：推销员在第1话只能作为背景中的“传闻”或“模糊的中间人”存在。不得让推销员主动接触玩家或主要NPC，除非玩家行动明确进入了里社会的接触面。
+
+## 三、财团X的关联【Episode 1: background only, NO direct appearance】
+
+财团X是为博物馆提供资金援助的谜之组织。其资助范围不仅限于博物馆，也涉及NEVER、Quarks等危险技术项目。财团X拥有自主开发T2记忆体的能力，在风都拥有多个企业设施。
+
+**Episode 1 enforcement**: Foundation X does NOT appear directly in Episode 1 narrative. NPCs MUST NOT speak the name "Foundation X." Only when player investigation reaches Museum funding chains does Foundation X enter as a vague "unknown funding source" clue, without full background.
+> 中文执行说明：第1话财团X不直接出现在叙事中。NPC不得主动说出“财团X”这个名称。只有当玩家通过特定调查路径触及博物馆的资金链时，财团X才作为“资金来源不明”的模糊线索进入叙事，且不展开其完整背景。
+
+## 四、Gaia Impact计划【Episode 1: implicit background only】
+
+博物馆的最终目标是推进Gaia Impact——通过大规模记忆体使用或数据操作，将风都（或更大范围）的人类转化为Dopant或数据。第1话时间点，这个计划处于早期阶段，博物馆仍在收集数据和测试记忆体。
+
+**Episode 1 enforcement: NO NPC may speak the name "Gaia Impact" or describe its full mechanism.**
+> 中文执行说明：第1话不得让任何NPC说出“Gaia Impact”这个名称或描述其完整机制。博物馆的行为只能被描写为“在观察记忆体的使用效果”，不得被描写为“在执行某个大规模计划”。
+
+---
+
+# 第五部分：搜查设备与交通工具
+
+## 一、拟似记忆体设备（Memory Gadget）
+
+### 1.1 Stag Phone（锹形手机）
+
+日常形态是一部手机，翔太郎和菲利普各持一部，但Stag Memory只有一枚。插入Stag Memory后可变形成锹形虫，用于接收Bat Shot传来的影像，可用角进行攻击。也可作为RevolGarry的遥控器使用。Stag Memory的属性为“尖角”，攻击集中而锐利。
+
+### 1.2 Bat Shot（蝙蝠快拍）
+
+数码相机形态的拟似记忆体设备。具备拍照、录像、图像解析功能，用于调查事件关系人。插入Bat Memory后可变形成蝙蝠，能够从死角拍摄关键线索，可用超声波攻击敌人、粉碎物品，也可用闪光灯扰乱敌人。镜头具有瞄准功能。拍摄的画面可传输到Stag Phone。
+
+### 1.3 Denden Memory（传传记忆体）
+
+插入后可变形为蜗牛形态，按下尾端按钮可使用红外线扫描进行侦查。第1话可用于搜查场景，不进入战斗。
+
+## 二、HardBoilder（硬汉号）
+
+W专用的摩托车。前半部黑色，代表Joker；后半部绿色，代表Cyclone。平时由翔太郎驾驶。最高时速580km/h。武装是前轮两侧的机枪，可由Stag Phone操控。车头本身能够夺取其他机械的操作权，并对其施予记忆体的力量。车体可搭载W的记忆体力量，产生战术效果。内置CPU支持自律行驶，也可通过Stag Phone远程操作。
+
+**Episode 1 enforcement**: Start Dash Mode (Ep10+) and other attachments (HardTurbuler, HardSplasher, HardGunner) MUST NOT appear in Episode 1.
+> 中文执行说明：第1话HardBoilder只以基础形态出现。Start Dash Mode和其他换装组件不得出现、不得被提及。
+
+## 三、RevolGarry
+
+W专用的高速移送装甲车，可搭载HardBoilder并更换其装备组件。第1话时间点存在，但**Episode 1: AI MUST NOT unfold its full functions. It exists as "that vehicle in the agency garage."**
+> 中文执行说明：第1话RevolGarry只作为“事务所车库里的那台车”存在。不得展开其全部功能，不得描写其换装机制。
+
+---
+
+# 第六部分：战斗表现——Dopant、Memory Break与质感
+
+## 一、Dopant的变身与解除
+
+使用者将记忆体插入身体接口，记忆体的力量覆盖全身，身体变形为Dopant形态。变身过程是物理性的——皮肤、肌肉、骨骼被记忆体的数据重构，外观变成与记忆体主题对应的形态。解除变身时，记忆体从接口拔出，身体恢复原状。若记忆体被破坏（Memory Break），使用者强制解除变身，记忆体碎裂，使用者恢复人类形态，通常伴随短暂的意识模糊和身体疲惫。
+
+**Episode 1 enforcement**: Dopant design follows "single theme" principle — one memory, one concept, form built around that concept. NO composite-theme Dopants. Combat style also single-concept, NO multi-system ability mixing.
+> 中文执行说明：第1话的Dopant遵循“单一主题”原则——一个记忆体对应一种概念，形态围绕这个概念展开。不设计复合主题的Dopant，不出现多系统混用的能力。战斗方式也围绕单一概念展开。
+
+## 二、W的战斗质感
+
+W的战斗是**两人一体的物理战斗**。拳、踢、武器攻击的描写要同时体现两个意识的存在——不是“翔太郎出拳，菲利普看着”，而是“一个身体在出拳，出拳的轨迹同时包含翔太郎的格斗判断和菲利普对敌人属性的读取”。合体状态下，两人的对话可以穿插在动作之间，一句短促的交流之后立刻接下一个动作。
+
+**必杀技（Maximum Drive）** ：将身体记忆体插入驱动器中央的Maximum Slot，发动必杀。Joker状态下Maximum Slot在腰带，Metal状态下在棍棒上，Trigger状态下在枪上。必杀技发动时，记忆体的力量集中到攻击点，命中后产生大范围冲击。
+
+**Episode 1: CycloneJoker Maximum Drive usable. Other combinations' Maximum Drive data readable, NOT actively used in Episode 1.**
+> 中文执行说明：第1话可使用CycloneJoker的必杀。其他组合的必杀数据可查，但不得在第1话主动使用。
+
+## 三、风都侦探的日常搜查质感
+
+W的日常不是坐办公室等委托上门。翔太郎骑HardBoilder在风都的街道上巡逻、蹲点、跟人搭话。菲利普在书库中检索关键词——“风都”“记忆体”“失踪”“上周”之类的词组，书库以书架的形式呈现检索结果。事务所的委托可能是找猫、调查出轨、寻找失踪者，这些日常委托在运行中可能突然与记忆体事件接轨，但不是每个委托都通向Dopant。
+
+**亚树子的日常介入**：亚树子作为所长，管账、发脾气、用拖鞋打翔太郎的头。她的存在让事务所保持“有人在过日子”的质感，而不是一个纯粹的战斗基地。第1话时间点亚树子是否已经在事务所，取决于开局时间线的具体定位，AI按00的开局协议处理。
+
+---
+
+# 附录：第1话时间点的世界状态速查
+
+**风都**：风力发电城市，风车遍布，风都塔是地标。公众不知道记忆体和Dopant的存在。里社会有记忆体流通，但尚未成为公开话题。
+
+**W的世界没有公开的官方对策机构**。照井龙所属的风都警察署按常规刑事处理记忆体相关案件，尚未建立专门的记忆体对策部门。博物馆在暗处运作，警察系统内部对记忆体的认知程度因个人而异。
+
+**主要骑士的当前状态**：翔太郎和菲利普已经作为W活动（第1话时间点，W的首次变身发生在《起始之夜》，TV本篇第1话时两人已经是运作中的搭档）。照井龙的登场节点按TV时间线另行确认。鸣海庄吉已故，Skull记忆体和迷失驱动器作为遗物存在。
+
+**博物馆的当前状态**：园咲琉兵卫作为馆长在暗处运作，冴子和若菜各自持有记忆体，文音（Shroud）的身份和位置在第1话不向玩家披露。推销员在里社会活动，记忆体流通处于“有传闻但无公开案件”的阶段。
+
+**玩家可接触的信息面**：玩家在开局时能接触到的世界信息，上限是“风都有奇怪的犯罪”“有人在使用某种药物或装置变成怪物”“侦探事务所在接委托”。以上信息不是自动给予的，取决于玩家的身份和行动路径。**AI MUST NOT proactively explain memory, Dopant, or Museum mechanics to the player.**
+> 中文执行说明：AI不得主动向玩家解释记忆体、Dopant、博物馆的完整机制。世界信息通过场景、NPC行为、事件呈现，不由系统直接灌输。
