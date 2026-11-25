@@ -595,6 +595,10 @@ html[data-theme="light"] .panel-act .btn-primary{color:#FFFFFF}
 }
 .row .rn.dash{color:var(--dim2);filter:none}
 .row .rt{font-size:14px;font-weight:500;line-height:1.45;min-width:0;word-break:break-word}
+button.rt{background:none;border:0;padding:0;text-align:left;cursor:pointer;color:inherit;font:inherit;font-size:14px;font-weight:500}
+button.rt:hover{color:var(--a);text-decoration:underline;text-underline-offset:3px}
+button.rt.plain{cursor:default;color:inherit}
+button.rt.plain:hover{text-decoration:none;color:inherit}
 .row .rm{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.08em;color:var(--dim2);white-space:nowrap}
 .row .rd{color:var(--dim);font-size:14px;text-align:center;transition:.2s}
 .row:hover .rd{color:var(--a);transform:translateY(2px)}
@@ -603,6 +607,56 @@ html[data-theme="light"] .panel-act .btn-primary{color:#FFFFFF}
   font-size:12px;line-height:1.75;color:var(--dim);background:var(--surface2);
 }
 .panel-tip b{color:var(--tip-ink);font-weight:600}
+
+/* ================= 在线阅览 ================= */
+#reader{
+  position:fixed;inset:0;z-index:110;display:flex;align-items:center;justify-content:center;
+  background:var(--overlay);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  opacity:0;pointer-events:none;transition:opacity .22s;
+}
+#reader.open{opacity:1;pointer-events:auto}
+.rd-card{
+  width:min(860px,100%);height:100%;max-height:92vh;display:flex;flex-direction:column;
+  background:var(--panel-bg);border:1px solid var(--panel-line);border-top:2px solid var(--a,var(--neon));
+  position:relative;transform:translateY(14px);transition:transform .24s cubic-bezier(.2,.8,.25,1);
+}
+#reader.open .rd-card{transform:translateY(0)}
+@media(min-width:860px){#reader{padding:36px}.rd-card{border-radius:3px;height:auto;max-height:86vh}}
+.rd-head{display:flex;align-items:flex-start;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line);flex:0 0 auto}
+.rd-head .r-n{
+  font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.14em;color:var(--a,var(--neon));
+  border:1px solid currentColor;padding:2px 6px;filter:var(--acc-filter);
+}
+.rd-head .r-main{flex:1;min-width:0}
+.rd-head h3{margin:7px 0 0;font-size:18px;font-weight:800;line-height:1.3}
+.rd-head .r-meta{margin:6px 0 0;font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.14em;color:var(--dim2)}
+.rd-act{display:flex;gap:8px;align-items:center;flex:0 0 auto}
+.rd-act .btn{height:36px;font-size:12.5px;padding:0 14px}
+.rd-body{
+  flex:1;overflow-y:auto;overscroll-behavior:contain;padding:22px 24px 44px;
+  font-size:14.5px;line-height:1.95;color:var(--ink);
+}
+.rd-body h1,.rd-body h2,.rd-body h3,.rd-body h4{margin:26px 0 10px;line-height:1.45}
+.rd-body h1{font-size:19px}.rd-body h2{font-size:17px}.rd-body h3{font-size:15.5px}.rd-body h4{font-size:14.5px}
+.rd-body p{margin:0 0 12px}
+.rd-body ul,.rd-body ol{margin:0 0 12px;padding-left:1.4em}
+.rd-body li{margin:4px 0}
+.rd-body blockquote{
+  margin:14px 0;padding:10px 14px;border-left:2px solid var(--a,var(--neon));
+  background:var(--surface2);color:var(--sub);font-size:13.5px;line-height:1.85;
+}
+.rd-body code{
+  font-family:ui-monospace,monospace;font-size:12.5px;
+  background:var(--num-bg);border:1px solid var(--num-line);padding:1px 5px;
+}
+.rd-body pre{
+  margin:14px 0;padding:12px 14px;overflow-x:auto;
+  background:var(--num-bg);border:1px solid var(--num-line);font-size:12.5px;line-height:1.75;
+}
+.rd-body pre code{background:none;border:0;padding:0}
+.rd-body hr{border:0;border-top:1px dashed var(--dash);margin:22px 0}
+.rd-body strong{font-weight:800}
+.rd-body a{color:var(--a,var(--neon))}
 
 /* ================= 说明弹窗 ================= */
 #modal{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:20px;
@@ -849,8 +903,26 @@ html[data-theme="light"] .panel-act .btn-primary{color:#FFFFFF}
     </div>
     <ul class="file-list" id="fileList"></ul>
     <div class="panel-tip">
-      <b>用法：</b>解压后先喂 <b>编号 00</b>（运行核心与锚点），再按 01、02… 顺序给 AI。00 里写明了开局怎么走。
+      <b>用法：</b>解压后先喂 <b>编号 00</b>（运行核心与锚点），再按 01、02… 顺序给 AI。00 里写明了开局怎么走。<br>
+      <b>点标题在线看</b>，点右侧 ↓ 下载原件。
     </div>
+  </div>
+</div>
+
+<div id="reader" aria-hidden="true">
+  <div class="rd-card" role="dialog" aria-modal="true" aria-labelledby="rdTitle">
+    <div class="rd-head">
+      <div class="r-main">
+        <span class="r-n" id="rdN">—</span>
+        <h3 id="rdTitle">—</h3>
+        <p class="r-meta" id="rdMeta">—</p>
+      </div>
+      <div class="rd-act">
+        <a class="btn btn-ghost" id="rdDl" href="#" download>下载原件</a>
+        <button class="close" id="rdClose" aria-label="关闭">×</button>
+      </div>
+    </div>
+    <div class="rd-body" id="rdBody"></div>
   </div>
 </div>
 
@@ -873,7 +945,7 @@ html[data-theme="light"] .panel-act .btn-primary{color:#FFFFFF}
 
 <script>
 /* DATA_START */
-window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","categories":[{"id":"rider","name":"假面骑士","en":"KAMEN RIDER","accent":"#FF3B8D"},{"id":"ultra","name":"奥特曼","en":"ULTRAMAN","accent":"#35E7FF"},{"id":"sentai","name":"超级战队","en":"SUPER SENTAI","accent":"#FFC24B"}],"series":[{"id":"ryuki","cat":"rider","name":"假面骑士 Ryuki","en":"KAMEN RIDER RYUKI","accent":"#8B5CFF","count":6,"kb":144.0,"zip":"downloads/ryuki.zip","files":[{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.txt","path":"files/ryuki/编号00·运行核心与锚点.txt","kb":26.0,"ext":"txt","order":0},{"n":"01","title":"镜世界与骑士系统","name":"编号01·镜世界与骑士系统.txt","path":"files/ryuki/编号01·镜世界与骑士系统.txt","kb":16.0,"ext":"txt","order":1},{"n":"02-A","title":"镜世界中的对应与介入关系","name":"编号02-A·镜世界中的对应与介入关系.txt","path":"files/ryuki/编号02-A·镜世界中的对应与介入关系.txt","kb":26.0,"ext":"txt","order":2},{"n":"02-B","title":"契约、复仇与独立参战关系","name":"编号02-B·契约、复仇与独立参战关系.txt","path":"files/ryuki/编号02-B·契约、复仇与独立参战关系.txt","kb":38.0,"ext":"txt","order":2},{"n":"03","title":"生活侧与组织","name":"编号03·生活侧与组织.txt","path":"files/ryuki/编号03·生活侧与组织.txt","kb":21.0,"ext":"txt","order":3},{"n":"04","title":"规则层与镜怪物","name":"编号04·规则层与镜怪物.txt","path":"files/ryuki/编号04·规则层与镜怪物.txt","kb":16.0,"ext":"txt","order":4}]},{"id":"faiz","cat":"rider","name":"假面骑士 Faiz","en":"KAMEN RIDER 555","accent":"#FFD23F","count":6,"kb":222.0,"zip":"downloads/faiz.zip","files":[{"n":"00","title":"STANDING BY","name":"编号00·STANDING BY.txt","path":"files/faiz/编号00·STANDING BY.txt","kb":24.0,"ext":"txt","order":0},{"n":"01","title":"灰色的城市","name":"编号01·灰色的城市.txt","path":"files/faiz/编号01·灰色的城市.txt","kb":45.0,"ext":"txt","order":1},{"n":"02","title":"555·913·333","name":"编号02·555·913·333.txt","path":"files/faiz/编号02·555·913·333.txt","kb":33.0,"ext":"txt","order":2},{"n":"03","title":"活人与归来者","name":"编号03·活人与归来者.txt","path":"files/faiz/编号03·活人与归来者.txt","kb":38.0,"ext":"txt","order":3},{"n":"04","title":"灰之群像","name":"编号04·灰之群像.txt","path":"files/faiz/编号04·灰之群像.txt","kb":39.0,"ext":"txt","order":4},{"n":"05","title":"“热闹”东京","name":"编号05·“热闹”东京.txt","path":"files/faiz/编号05·“热闹”东京.txt","kb":43.0,"ext":"txt","order":5}]},{"id":"blade","cat":"rider","name":"假面骑士 Blade","en":"KAMEN RIDER BLADE","accent":"#4D7CFE","count":5,"kb":153.0,"zip":"downloads/blade.zip","files":[{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.txt","path":"files/blade/编号00·运行核心与锚点.txt","kb":30.0,"ext":"txt","order":0},{"n":"01","title":"世界观与设备集","name":"编号01·世界观与设备集.txt","path":"files/blade/编号01·世界观与设备集.txt","kb":19.0,"ext":"txt","order":1},{"n":"02","title":"骑士与关系者","name":"编号02·骑士与关系者.txt","path":"files/blade/编号02·骑士与关系者.txt","kb":34.0,"ext":"txt","order":2},{"n":"03","title":"白井农场与栗原家","name":"编号03·白井农场与栗原家.txt","path":"files/blade/编号03·白井农场与栗原家.txt","kb":38.0,"ext":"txt","order":3},{"n":"04","title":"BOARD暗面与Undead侧","name":"编号04·BOARD暗面与Undead侧.txt","path":"files/blade/编号04·BOARD暗面与Undead侧.txt","kb":32.0,"ext":"txt","order":4}]},{"id":"w","cat":"rider","name":"假面骑士 W","en":"KAMEN RIDER DOUBLE","accent":"#3DDC97","count":6,"kb":271.0,"zip":"downloads/w.zip","files":[{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.txt","path":"files/w/编号00·运行核心与锚点.txt","kb":42.0,"ext":"txt","order":0},{"n":"01","title":"世界观与设备集","name":"编号01·世界观与设备集.txt","path":"files/w/编号01·世界观与设备集.txt","kb":30.0,"ext":"txt","order":1},{"n":"02","title":"主要骑士","name":"编号02·主要骑士.txt","path":"files/w/编号02·主要骑士.txt","kb":50.0,"ext":"txt","order":2},{"n":"03","title":"反派与敌人","name":"编号03·反派与敌人.txt","path":"files/w/编号03·反派与敌人.txt","kb":68.0,"ext":"txt","order":3},{"n":"04","title":"配角与辅助","name":"编号04·配角与辅助.txt","path":"files/w/编号04·配角与辅助.txt","kb":42.0,"ext":"txt","order":4},{"n":"05","title":"NEVER与剧场版角色","name":"编号05·NEVER与剧场版角色.txt","path":"files/w/编号05·NEVER与剧场版角色.txt","kb":39.0,"ext":"txt","order":5}]},{"id":"wizard","cat":"rider","name":"假面骑士 Wizard","en":"KAMEN RIDER WIZARD","accent":"#FFB400","count":6,"kb":106.0,"zip":"downloads/wizard.zip","files":[{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.txt","path":"files/wizard/编号00·运行核心与锚点.txt","kb":30.0,"ext":"txt","order":0},{"n":"01","title":"世界观","name":"编号01·世界观.txt","path":"files/wizard/编号01·世界观.txt","kb":11.0,"ext":"txt","order":1},{"n":"02","title":"双骑士卷","name":"编号02·双骑士卷.txt","path":"files/wizard/编号02·双骑士卷.txt","kb":18.0,"ext":"txt","order":2},{"n":"03","title":"日常与支援卷","name":"编号03·日常与支援卷.txt","path":"files/wizard/编号03·日常与支援卷.txt","kb":17.0,"ext":"txt","order":3},{"n":"04","title":"反派与黑幕卷","name":"编号04·反派与黑幕卷.txt","path":"files/wizard/编号04·反派与黑幕卷.txt","kb":15.0,"ext":"txt","order":4},{"n":"05","title":"体制、配角与生成规则卷","name":"编号05·体制、配角与生成规则卷.txt","path":"files/wizard/编号05·体制、配角与生成规则卷.txt","kb":14.0,"ext":"txt","order":5}]},{"id":"drive","cat":"rider","name":"假面骑士 Drive","en":"KAMEN RIDER DRIVE","accent":"#FF3B5C","count":5,"kb":219.0,"zip":"downloads/drive.zip","files":[{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.txt","path":"files/drive/编号00·运行核心与锚点.txt","kb":36.0,"ext":"txt","order":0},{"n":"01","title":"世界驾驶手册","name":"编号01·世界驾驶手册.txt","path":"files/drive/编号01·世界驾驶手册.txt","kb":42.0,"ext":"txt","order":1},{"n":"02","title":"驾驶席上的核心骑士","name":"编号02·驾驶席上的核心骑士.txt","path":"files/drive/编号02·驾驶席上的核心骑士.txt","kb":49.0,"ext":"txt","order":2},{"n":"03","title":"Roidmude阵营档案","name":"编号03·Roidmude阵营档案.txt","path":"files/drive/编号03·Roidmude阵营档案.txt","kb":43.0,"ext":"txt","order":3},{"n":"04","title":"特状课与辅助阵营","name":"编号04·特状课与辅助阵营.txt","path":"files/drive/编号04·特状课与辅助阵营.txt","kb":48.0,"ext":"txt","order":4}]},{"id":"ex-aid","cat":"rider","name":"假面骑士 Ex-Aid","en":"KAMEN RIDER EX-AID","accent":"#FF5FD2","count":5,"kb":202.0,"zip":"downloads/ex-aid.zip","files":[{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.txt","path":"files/ex-aid/编号00·运行核心与锚点.txt","kb":39.0,"ext":"txt","order":0},{"n":"01","title":"世界观与设备集","name":"编号01·世界观与设备集.txt","path":"files/ex-aid/编号01·世界观与设备集.txt","kb":24.0,"ext":"txt","order":1},{"n":"02","title":"主要骑士","name":"编号02·主要骑士.txt","path":"files/ex-aid/编号02·主要骑士.txt","kb":54.0,"ext":"txt","order":2},{"n":"03","title":"反派与敌人","name":"编号03·反派与敌人.txt","path":"files/ex-aid/编号03·反派与敌人.txt","kb":37.0,"ext":"txt","order":3},{"n":"04","title":"配角与辅助","name":"编号04·配角与辅助.txt","path":"files/ex-aid/编号04·配角与辅助.txt","kb":48.0,"ext":"txt","order":4}]},{"id":"build","cat":"rider","name":"假面骑士 Build","en":"KAMEN RIDER BUILD","accent":"#29D8FF","count":5,"kb":181.0,"zip":"downloads/build.zip","files":[{"n":"00","title":"Build驱动器运行协议","name":"编号00·Build驱动器运行协议.txt","path":"files/build/编号00·Build驱动器运行协议.txt","kb":19.0,"ext":"txt","order":0},{"n":"01","title":"天空之壁与满装瓶罐","name":"编号01·天空之壁与满装瓶罐.txt","path":"files/build/编号01·天空之壁与满装瓶罐.txt","kb":29.0,"ext":"txt","order":1},{"n":"02","title":"Build系变身者","name":"编号02·Build系变身者.txt","path":"files/build/编号02·Build系变身者.txt","kb":49.0,"ext":"txt","order":2},{"n":"03","title":"Evolto与浮士德","name":"编号03·Evolto与浮士德.txt","path":"files/build/编号03·Evolto与浮士德.txt","kb":36.0,"ext":"txt","order":3},{"n":"04","title":"Nascita与关系者","name":"编号04·Nascita与关系者.txt","path":"files/build/编号04·Nascita与关系者.txt","kb":48.0,"ext":"txt","order":4}]},{"id":"zi-o","cat":"rider","name":"假面骑士 Zi-O","en":"KAMEN RIDER ZI-O","accent":"#FF3B8D","count":6,"kb":214.0,"zip":"downloads/zi-o.zip","files":[{"n":"00","title":"零时·运行核心","name":"编号00·零时·运行核心.txt","path":"files/zi-o/编号00·零时·运行核心.txt","kb":34.0,"ext":"txt","order":0},{"n":"01","title":"时之律法","name":"编号01·时之律法.txt","path":"files/zi-o/编号01·时之律法.txt","kb":29.0,"ext":"txt","order":1},{"n":"02","title":"腕上王权","name":"编号02·腕上王权.txt","path":"files/zi-o/编号02·腕上王权.txt","kb":55.0,"ext":"txt","order":2},{"n":"03","title":"伪王名录","name":"编号03·伪王名录.txt","path":"files/zi-o/编号03·伪王名录.txt","kb":33.0,"ext":"txt","order":3},{"n":"04","title":"纪元表盘","name":"编号04·纪元表盘.txt","path":"files/zi-o/编号04·纪元表盘.txt","kb":34.0,"ext":"txt","order":4},{"n":"05","title":"九时五刻","name":"编号05·九时五刻.txt","path":"files/zi-o/编号05·九时五刻.txt","kb":30.0,"ext":"txt","order":5}]},{"id":"geats","cat":"rider","name":"假面骑士 Geats","en":"KAMEN RIDER GEATS","accent":"#FF9F1C","count":8,"kb":259.0,"zip":"downloads/geats.zip","files":[{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.txt","path":"files/geats/编号00·运行核心与锚点.txt","kb":23.0,"ext":"txt","order":0},{"n":"00","title":"运行核心与锚点（LaTeX版）","name":"编号00·运行核心与锚点（LaTeX版）.txt","path":"files/geats/编号00·运行核心与锚点（LaTeX版）.txt","kb":28.0,"ext":"txt","order":0},{"n":"01","title":"世界观与规则集","name":"编号01·世界观与规则集.txt","path":"files/geats/编号01·世界观与规则集.txt","kb":24.0,"ext":"txt","order":1},{"n":"02","title":"参赛者","name":"编号02·参赛者.txt","path":"files/geats/编号02·参赛者.txt","kb":46.0,"ext":"txt","order":2},{"n":"03","title":"运营方","name":"编号03·运营方.txt","path":"files/geats/编号03·运营方.txt","kb":46.0,"ext":"txt","order":3},{"n":"04","title":"未来观众与赞助商","name":"编号04·未来观众与赞助商.txt","path":"files/geats/编号04·未来观众与赞助商.txt","kb":42.0,"ext":"txt","order":4},{"n":"05","title":"邪魔徒侧","name":"编号05·邪魔徒侧.txt","path":"files/geats/编号05·邪魔徒侧.txt","kb":19.0,"ext":"txt","order":5},{"n":"06","title":"现实侧","name":"编号06·现实侧.txt","path":"files/geats/编号06·现实侧.txt","kb":30.0,"ext":"txt","order":6}]},{"id":"zzz","cat":"rider","name":"假面骑士 ZZZ","en":"KAMEN RIDER ZZZ","accent":"#7B6CFF","count":5,"kb":207.0,"zip":"downloads/zzz.zip","files":[{"n":"00","title":"零号作战室","name":"编号00·零号作战室.txt","path":"files/zzz/编号00·零号作战室.txt","kb":30.0,"ext":"txt","order":0},{"n":"01","title":"梦与现实的边界","name":"编号01·梦与现实的边界.txt","path":"files/zzz/编号01·梦与现实的边界.txt","kb":40.0,"ext":"txt","order":1},{"n":"02","title":"梦境特工档案","name":"编号02·梦境特工档案.txt","path":"files/zzz/编号02·梦境特工档案.txt","kb":61.0,"ext":"txt","order":2},{"n":"03","title":"暗码内部档案","name":"编号03·暗码内部档案.txt","path":"files/zzz/编号03·暗码内部档案.txt","kb":39.0,"ext":"txt","order":3},{"n":"04","title":"噩梦目录","name":"编号04·噩梦目录.txt","path":"files/zzz/编号04·噩梦目录.txt","kb":37.0,"ext":"txt","order":4}]},{"id":"gaia","cat":"ultra","name":"盖亚奥特曼","en":"ULTRAMAN GAIA","accent":"#3D8BFF","count":7,"kb":173.0,"zip":"downloads/gaia.zip","files":[{"n":"00","title":"运行者手册","name":"编号00·运行者手册.txt","path":"files/gaia/编号00·运行者手册.txt","kb":28.0,"ext":"txt","order":0},{"n":"01","title":"核心二人组与相关人物","name":"编号01·核心二人组与相关人物.txt","path":"files/gaia/编号01·核心二人组与相关人物.txt","kb":20.0,"ext":"txt","order":1},{"n":"02","title":"XIG全员角色卡","name":"编号02·XIG全员角色卡.txt","path":"files/gaia/编号02·XIG全员角色卡.txt","kb":30.0,"ext":"txt","order":2},{"n":"03","title":"炼金之星与KCB记者组","name":"编号03·炼金之星与KCB记者组.txt","path":"files/gaia/编号03·炼金之星与KCB记者组.txt","kb":30.0,"ext":"txt","order":3},{"n":"04","title":"怪兽与敌人","name":"编号04·怪兽与敌人.txt","path":"files/gaia/编号04·怪兽与敌人.txt","kb":30.0,"ext":"txt","order":4},{"n":"05","title":"世界观与装备","name":"编号05·世界观与装备.txt","path":"files/gaia/编号05·世界观与装备.txt","kb":14.0,"ext":"txt","order":5},{"n":"06","title":"锚点、推演与战斗规则","name":"编号06·锚点、推演与战斗规则.txt","path":"files/gaia/编号06·锚点、推演与战斗规则.txt","kb":21.0,"ext":"txt","order":6}]},{"id":"orb","cat":"ultra","name":"欧布奥特曼：原生之初","en":"ULTRAMAN ORB · ORIGIN SAGA","accent":"#FF7A3D","count":4,"kb":67.0,"zip":"downloads/orb.zip","files":[{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.txt","path":"files/orb/编号00·运行核心与锚点.txt","kb":17.0,"ext":"txt","order":0},{"n":"01","title":"世界观与规则集","name":"编号01·世界观与规则集.txt","path":"files/orb/编号01·世界观与规则集.txt","kb":12.0,"ext":"txt","order":1},{"n":"02","title":"核心角色卡","name":"编号02·核心角色卡.txt","path":"files/orb/编号02·核心角色卡.txt","kb":23.0,"ext":"txt","order":2},{"n":"03","title":"外部与辅助角色卡","name":"编号03·外部与辅助角色卡.txt","path":"files/orb/编号03·外部与辅助角色卡.txt","kb":15.0,"ext":"txt","order":3}]},{"id":"lupat","cat":"sentai","name":"快盗战队 VS 警察战队","en":"LUPINRANGER VS PATRANGER","accent":"#FF4466","count":5,"kb":117.0,"zip":"downloads/lupat.zip","files":[{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.txt","path":"files/lupat/编号00·运行核心与锚点.txt","kb":25.0,"ext":"txt","order":0},{"n":"01","title":"世界观、地点与设备","name":"编号01·世界观、地点与设备.txt","path":"files/lupat/编号01·世界观、地点与设备.txt","kb":13.0,"ext":"txt","order":1},{"n":"02","title":"快盗侧","name":"编号02·快盗侧.txt","path":"files/lupat/编号02·快盗侧.txt","kb":27.0,"ext":"txt","order":2},{"n":"03","title":"警察侧与日常侧","name":"编号03·警察侧与日常侧.txt","path":"files/lupat/编号03·警察侧与日常侧.txt","kb":27.0,"ext":"txt","order":3},{"n":"04","title":"僵格拉侧","name":"编号04·僵格拉侧.txt","path":"files/lupat/编号04·僵格拉侧.txt","kb":27.0,"ext":"txt","order":4}]},{"id":"gozyuger","cat":"sentai","name":"头号战队 豪兽者","en":"NO.1 SENTAI GOZYUGER","accent":"#FFC93C","count":5,"kb":157.0,"zip":"downloads/gozyuger.zip","files":[{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.txt","path":"files/gozyuger/编号00·运行核心与锚点.txt","kb":22.0,"ext":"txt","order":0},{"n":"01","title":"世界观、戒指与争霸规则","name":"编号01·世界观、戒指与争霸规则.txt","path":"files/gozyuger/编号01·世界观、戒指与争霸规则.txt","kb":21.0,"ext":"txt","order":1},{"n":"02","title":"豪兽者侧","name":"编号02·豪兽者侧.txt","path":"files/gozyuger/编号02·豪兽者侧.txt","kb":29.0,"ext":"txt","order":2},{"n":"03","title":"布莱丹与灾厄侧","name":"编号03·布莱丹与灾厄侧.txt","path":"files/gozyuger/编号03·布莱丹与灾厄侧.txt","kb":47.0,"ext":"txt","order":3},{"n":"04","title":"宇宙战士与日常侧","name":"编号04·宇宙战士与日常侧.txt","path":"files/gozyuger/编号04·宇宙战士与日常侧.txt","kb":38.0,"ext":"txt","order":4}]}],"plugins":{"protocol":{"name":"特摄二创插件通道协议.md","title":"特摄二创插件通道协议","path":"files/plugins/特摄二创插件通道协议.md","kb":3.0,"ext":"md"},"note":{"name":"插件说明（先看这个）.jpg","path":"files/plugins/插件说明（先看这个）.jpg","kb":241.0,"ext":"jpg"},"own":[{"name":"[通用型][管理员权限][不同意提供].md","title":"管理员权限","path":"files/plugins/[通用型][管理员权限][不同意提供].md","kb":2.0,"ext":"md","by":"不同意"},{"name":"[通用型][无限财富][不同意提供].md","title":"无限财富","path":"files/plugins/[通用型][无限财富][不同意提供].md","kb":3.0,"ext":"md","by":"不同意"},{"name":"[通用型][性转苹果汁][不同意提供].md","title":"性转苹果汁","path":"files/plugins/[通用型][性转苹果汁][不同意提供].md","kb":2.0,"ext":"md","by":"不同意"},{"name":"[通用型][遗忘风铃][不同意提供].md","title":"遗忘风铃","path":"files/plugins/[通用型][遗忘风铃][不同意提供].md","kb":3.0,"ext":"md","by":"不同意"}],"guest":[{"name":"[通用型][假面骑士装B系统][。。。。提供].html","title":"假面骑士装B系统","path":"files/plugins/[通用型][假面骑士装B系统][。。。。提供].html","kb":7.0,"ext":"html","by":"。。。。"},{"name":"[假面骑士Drive][1-48集台词脚本][角色卡大更新][GAIM提供]","title":"Drive · 角色卡大更新","kind":"pack","dep":"假面骑士 Drive","by":"GAIM","zip":"downloads/pack-1.zip","kb":660.0,"count":7,"files":[{"name":"编号00·运行核心与锚点.docx","title":"编号00·运行核心与锚点","path":"files/plugins/pack-1/编号00·运行核心与锚点.docx","kb":38.0},{"name":"编号01·世界驾驶手册.docx","title":"编号01·世界驾驶手册","path":"files/plugins/pack-1/编号01·世界驾驶手册.docx","kb":33.0},{"name":"编号02·驾驶席上的核心骑士.docx","title":"编号02·驾驶席上的核心骑士","path":"files/plugins/pack-1/编号02·驾驶席上的核心骑士.docx","kb":41.0},{"name":"编号03·Roidmude阵营档案.docx","title":"编号03·Roidmude阵营档案","path":"files/plugins/pack-1/编号03·Roidmude阵营档案.docx","kb":41.0},{"name":"编号04·特状课与辅助阵营.docx","title":"编号04·特状课与辅助阵营","path":"files/plugins/pack-1/编号04·特状课与辅助阵营.docx","kb":42.0},{"name":"假面骑士Drive·角色卡档案.docx","title":"假面骑士Drive·角色卡档案","path":"files/plugins/pack-1/假面骑士Drive·角色卡档案.docx","kb":101.0},{"name":"假面骑士Drive·原作台词脚本全集.docx","title":"假面骑士Drive·原作台词脚本全集","path":"files/plugins/pack-1/假面骑士Drive·原作台词脚本全集.docx","kb":365.0}],"note":"1-48集台词脚本"}],"zip":"downloads/plugins.zip"},"stats":{"works":15,"files":84,"plugins":6}};
+window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","categories":[{"id":"rider","name":"假面骑士","en":"KAMEN RIDER","accent":"#FF3B8D"},{"id":"ultra","name":"奥特曼","en":"ULTRAMAN","accent":"#35E7FF"},{"id":"sentai","name":"超级战队","en":"SUPER SENTAI","accent":"#FFC24B"}],"series":[{"id":"ryuki","cat":"rider","name":"假面骑士 Ryuki","en":"KAMEN RIDER RYUKI","accent":"#8B5CFF","count":6,"kb":144,"zip":"downloads/ryuki.zip","files":[{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.md","path":"files/ryuki/编号00·运行核心与锚点.md","kb":26,"ext":"md","order":0},{"n":"01","title":"镜世界与骑士系统","name":"编号01·镜世界与骑士系统.md","path":"files/ryuki/编号01·镜世界与骑士系统.md","kb":16,"ext":"md","order":1},{"n":"02-A","title":"镜世界中的对应与介入关系","name":"编号02-A·镜世界中的对应与介入关系.md","path":"files/ryuki/编号02-A·镜世界中的对应与介入关系.md","kb":26,"ext":"md","order":2},{"n":"02-B","title":"契约、复仇与独立参战关系","name":"编号02-B·契约、复仇与独立参战关系.md","path":"files/ryuki/编号02-B·契约、复仇与独立参战关系.md","kb":38,"ext":"md","order":2},{"n":"03","title":"生活侧与组织","name":"编号03·生活侧与组织.md","path":"files/ryuki/编号03·生活侧与组织.md","kb":21,"ext":"md","order":3},{"n":"04","title":"规则层与镜怪物","name":"编号04·规则层与镜怪物.md","path":"files/ryuki/编号04·规则层与镜怪物.md","kb":16,"ext":"md","order":4}]},{"id":"faiz","cat":"rider","name":"假面骑士 Faiz","en":"KAMEN RIDER 555","accent":"#FFD23F","count":6,"kb":222,"zip":"downloads/faiz.zip","files":[{"n":"00","title":"STANDING BY","name":"编号00·STANDING BY.md","path":"files/faiz/编号00·STANDING BY.md","kb":24,"ext":"md","order":0},{"n":"01","title":"灰色的城市","name":"编号01·灰色的城市.md","path":"files/faiz/编号01·灰色的城市.md","kb":45,"ext":"md","order":1},{"n":"02","title":"555·913·333","name":"编号02·555·913·333.md","path":"files/faiz/编号02·555·913·333.md","kb":33,"ext":"md","order":2},{"n":"03","title":"活人与归来者","name":"编号03·活人与归来者.md","path":"files/faiz/编号03·活人与归来者.md","kb":38,"ext":"md","order":3},{"n":"04","title":"灰之群像","name":"编号04·灰之群像.md","path":"files/faiz/编号04·灰之群像.md","kb":39,"ext":"md","order":4},{"n":"05","title":"“热闹”东京","name":"编号05·“热闹”东京.md","path":"files/faiz/编号05·“热闹”东京.md","kb":43,"ext":"md","order":5}]},{"id":"blade","cat":"rider","name":"假面骑士 Blade","en":"KAMEN RIDER BLADE","accent":"#4D7CFE","count":5,"kb":153,"zip":"downloads/blade.zip","files":[{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.md","path":"files/blade/编号00·运行核心与锚点.md","kb":30,"ext":"md","order":0},{"n":"01","title":"世界观与设备集","name":"编号01·世界观与设备集.md","path":"files/blade/编号01·世界观与设备集.md","kb":19,"ext":"md","order":1},{"n":"02","title":"骑士与关系者","name":"编号02·骑士与关系者.md","path":"files/blade/编号02·骑士与关系者.md","kb":34,"ext":"md","order":2},{"n":"03","title":"白井农场与栗原家","name":"编号03·白井农场与栗原家.md","path":"files/blade/编号03·白井农场与栗原家.md","kb":38,"ext":"md","order":3},{"n":"04","title":"BOARD暗面与Undead侧","name":"编号04·BOARD暗面与Undead侧.md","path":"files/blade/编号04·BOARD暗面与Undead侧.md","kb":32,"ext":"md","order":4}]},{"id":"w","cat":"rider","name":"假面骑士 W","en":"KAMEN RIDER DOUBLE","accent":"#3DDC97","count":6,"kb":271,"zip":"downloads/w.zip","files":[{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.md","path":"files/w/编号00·运行核心与锚点.md","kb":42,"ext":"md","order":0},{"n":"01","title":"世界观与设备集","name":"编号01·世界观与设备集.md","path":"files/w/编号01·世界观与设备集.md","kb":30,"ext":"md","order":1},{"n":"02","title":"主要骑士","name":"编号02·主要骑士.md","path":"files/w/编号02·主要骑士.md","kb":50,"ext":"md","order":2},{"n":"03","title":"反派与敌人","name":"编号03·反派与敌人.md","path":"files/w/编号03·反派与敌人.md","kb":68,"ext":"md","order":3},{"n":"04","title":"配角与辅助","name":"编号04·配角与辅助.md","path":"files/w/编号04·配角与辅助.md","kb":42,"ext":"md","order":4},{"n":"05","title":"NEVER与剧场版角色","name":"编号05·NEVER与剧场版角色.md","path":"files/w/编号05·NEVER与剧场版角色.md","kb":39,"ext":"md","order":5}]},{"id":"wizard","cat":"rider","name":"假面骑士 Wizard","en":"KAMEN RIDER WIZARD","accent":"#FFB400","count":6,"kb":106,"zip":"downloads/wizard.zip","files":[{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.md","path":"files/wizard/编号00·运行核心与锚点.md","kb":30,"ext":"md","order":0},{"n":"01","title":"世界观","name":"编号01·世界观.md","path":"files/wizard/编号01·世界观.md","kb":11,"ext":"md","order":1},{"n":"02","title":"双骑士卷","name":"编号02·双骑士卷.md","path":"files/wizard/编号02·双骑士卷.md","kb":18,"ext":"md","order":2},{"n":"03","title":"日常与支援卷","name":"编号03·日常与支援卷.md","path":"files/wizard/编号03·日常与支援卷.md","kb":17,"ext":"md","order":3},{"n":"04","title":"反派与黑幕卷","name":"编号04·反派与黑幕卷.md","path":"files/wizard/编号04·反派与黑幕卷.md","kb":15,"ext":"md","order":4},{"n":"05","title":"体制、配角与生成规则卷","name":"编号05·体制、配角与生成规则卷.md","path":"files/wizard/编号05·体制、配角与生成规则卷.md","kb":14,"ext":"md","order":5}]},{"id":"drive","cat":"rider","name":"假面骑士 Drive","en":"KAMEN RIDER DRIVE","accent":"#FF3B5C","count":5,"kb":219,"zip":"downloads/drive.zip","files":[{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.md","path":"files/drive/编号00·运行核心与锚点.md","kb":36,"ext":"md","order":0},{"n":"01","title":"世界驾驶手册","name":"编号01·世界驾驶手册.md","path":"files/drive/编号01·世界驾驶手册.md","kb":42,"ext":"md","order":1},{"n":"02","title":"驾驶席上的核心骑士","name":"编号02·驾驶席上的核心骑士.md","path":"files/drive/编号02·驾驶席上的核心骑士.md","kb":49,"ext":"md","order":2},{"n":"03","title":"Roidmude阵营档案","name":"编号03·Roidmude阵营档案.md","path":"files/drive/编号03·Roidmude阵营档案.md","kb":43,"ext":"md","order":3},{"n":"04","title":"特状课与辅助阵营","name":"编号04·特状课与辅助阵营.md","path":"files/drive/编号04·特状课与辅助阵营.md","kb":48,"ext":"md","order":4}]},{"id":"ex-aid","cat":"rider","name":"假面骑士 Ex-Aid","en":"KAMEN RIDER EX-AID","accent":"#FF5FD2","count":5,"kb":202,"zip":"downloads/ex-aid.zip","files":[{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.md","path":"files/ex-aid/编号00·运行核心与锚点.md","kb":39,"ext":"md","order":0},{"n":"01","title":"世界观与设备集","name":"编号01·世界观与设备集.md","path":"files/ex-aid/编号01·世界观与设备集.md","kb":24,"ext":"md","order":1},{"n":"02","title":"主要骑士","name":"编号02·主要骑士.md","path":"files/ex-aid/编号02·主要骑士.md","kb":54,"ext":"md","order":2},{"n":"03","title":"反派与敌人","name":"编号03·反派与敌人.md","path":"files/ex-aid/编号03·反派与敌人.md","kb":37,"ext":"md","order":3},{"n":"04","title":"配角与辅助","name":"编号04·配角与辅助.md","path":"files/ex-aid/编号04·配角与辅助.md","kb":48,"ext":"md","order":4}]},{"id":"build","cat":"rider","name":"假面骑士 Build","en":"KAMEN RIDER BUILD","accent":"#29D8FF","count":5,"kb":181,"zip":"downloads/build.zip","files":[{"n":"00","title":"Build驱动器运行协议","name":"编号00·Build驱动器运行协议.md","path":"files/build/编号00·Build驱动器运行协议.md","kb":19,"ext":"md","order":0},{"n":"01","title":"天空之壁与满装瓶罐","name":"编号01·天空之壁与满装瓶罐.md","path":"files/build/编号01·天空之壁与满装瓶罐.md","kb":29,"ext":"md","order":1},{"n":"02","title":"Build系变身者","name":"编号02·Build系变身者.md","path":"files/build/编号02·Build系变身者.md","kb":49,"ext":"md","order":2},{"n":"03","title":"Evolto与浮士德","name":"编号03·Evolto与浮士德.md","path":"files/build/编号03·Evolto与浮士德.md","kb":36,"ext":"md","order":3},{"n":"04","title":"Nascita与关系者","name":"编号04·Nascita与关系者.md","path":"files/build/编号04·Nascita与关系者.md","kb":48,"ext":"md","order":4}]},{"id":"zi-o","cat":"rider","name":"假面骑士 Zi-O","en":"KAMEN RIDER ZI-O","accent":"#FF3B8D","count":6,"kb":214,"zip":"downloads/zi-o.zip","files":[{"n":"00","title":"零时·运行核心","name":"编号00·零时·运行核心.md","path":"files/zi-o/编号00·零时·运行核心.md","kb":34,"ext":"md","order":0},{"n":"01","title":"时之律法","name":"编号01·时之律法.md","path":"files/zi-o/编号01·时之律法.md","kb":29,"ext":"md","order":1},{"n":"02","title":"腕上王权","name":"编号02·腕上王权.md","path":"files/zi-o/编号02·腕上王权.md","kb":55,"ext":"md","order":2},{"n":"03","title":"伪王名录","name":"编号03·伪王名录.md","path":"files/zi-o/编号03·伪王名录.md","kb":33,"ext":"md","order":3},{"n":"04","title":"纪元表盘","name":"编号04·纪元表盘.md","path":"files/zi-o/编号04·纪元表盘.md","kb":34,"ext":"md","order":4},{"n":"05","title":"九时五刻","name":"编号05·九时五刻.md","path":"files/zi-o/编号05·九时五刻.md","kb":30,"ext":"md","order":5}]},{"id":"geats","cat":"rider","name":"假面骑士 Geats","en":"KAMEN RIDER GEATS","accent":"#FF9F1C","count":8,"kb":259,"zip":"downloads/geats.zip","files":[{"n":"00","title":"运行核心与锚点（LaTeX版）","name":"编号00·运行核心与锚点（LaTeX版）.md","path":"files/geats/编号00·运行核心与锚点（LaTeX版）.md","kb":28,"ext":"md","order":0},{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.md","path":"files/geats/编号00·运行核心与锚点.md","kb":23,"ext":"md","order":0},{"n":"01","title":"世界观与规则集","name":"编号01·世界观与规则集.md","path":"files/geats/编号01·世界观与规则集.md","kb":24,"ext":"md","order":1},{"n":"02","title":"参赛者","name":"编号02·参赛者.md","path":"files/geats/编号02·参赛者.md","kb":46,"ext":"md","order":2},{"n":"03","title":"运营方","name":"编号03·运营方.md","path":"files/geats/编号03·运营方.md","kb":46,"ext":"md","order":3},{"n":"04","title":"未来观众与赞助商","name":"编号04·未来观众与赞助商.md","path":"files/geats/编号04·未来观众与赞助商.md","kb":42,"ext":"md","order":4},{"n":"05","title":"邪魔徒侧","name":"编号05·邪魔徒侧.md","path":"files/geats/编号05·邪魔徒侧.md","kb":19,"ext":"md","order":5},{"n":"06","title":"现实侧","name":"编号06·现实侧.md","path":"files/geats/编号06·现实侧.md","kb":30,"ext":"md","order":6}]},{"id":"zzz","cat":"rider","name":"假面骑士 ZZZ","en":"KAMEN RIDER ZZZ","accent":"#7B6CFF","count":5,"kb":207,"zip":"downloads/zzz.zip","files":[{"n":"00","title":"零号作战室","name":"编号00·零号作战室.md","path":"files/zzz/编号00·零号作战室.md","kb":30,"ext":"md","order":0},{"n":"01","title":"梦与现实的边界","name":"编号01·梦与现实的边界.md","path":"files/zzz/编号01·梦与现实的边界.md","kb":40,"ext":"md","order":1},{"n":"02","title":"梦境特工档案","name":"编号02·梦境特工档案.md","path":"files/zzz/编号02·梦境特工档案.md","kb":61,"ext":"md","order":2},{"n":"03","title":"暗码内部档案","name":"编号03·暗码内部档案.md","path":"files/zzz/编号03·暗码内部档案.md","kb":39,"ext":"md","order":3},{"n":"04","title":"噩梦目录","name":"编号04·噩梦目录.md","path":"files/zzz/编号04·噩梦目录.md","kb":37,"ext":"md","order":4}]},{"id":"gaia","cat":"ultra","name":"盖亚奥特曼","en":"ULTRAMAN GAIA","accent":"#3D8BFF","count":7,"kb":173,"zip":"downloads/gaia.zip","files":[{"n":"00","title":"运行者手册","name":"编号00·运行者手册.md","path":"files/gaia/编号00·运行者手册.md","kb":28,"ext":"md","order":0},{"n":"01","title":"核心二人组与相关人物","name":"编号01·核心二人组与相关人物.md","path":"files/gaia/编号01·核心二人组与相关人物.md","kb":20,"ext":"md","order":1},{"n":"02","title":"XIG全员角色卡","name":"编号02·XIG全员角色卡.md","path":"files/gaia/编号02·XIG全员角色卡.md","kb":30,"ext":"md","order":2},{"n":"03","title":"炼金之星与KCB记者组","name":"编号03·炼金之星与KCB记者组.md","path":"files/gaia/编号03·炼金之星与KCB记者组.md","kb":30,"ext":"md","order":3},{"n":"04","title":"怪兽与敌人","name":"编号04·怪兽与敌人.md","path":"files/gaia/编号04·怪兽与敌人.md","kb":30,"ext":"md","order":4},{"n":"05","title":"世界观与装备","name":"编号05·世界观与装备.md","path":"files/gaia/编号05·世界观与装备.md","kb":14,"ext":"md","order":5},{"n":"06","title":"锚点、推演与战斗规则","name":"编号06·锚点、推演与战斗规则.md","path":"files/gaia/编号06·锚点、推演与战斗规则.md","kb":21,"ext":"md","order":6}]},{"id":"orb","cat":"ultra","name":"欧布奥特曼：原生之初","en":"ULTRAMAN ORB · ORIGIN SAGA","accent":"#FF7A3D","count":4,"kb":67,"zip":"downloads/orb.zip","files":[{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.md","path":"files/orb/编号00·运行核心与锚点.md","kb":17,"ext":"md","order":0},{"n":"01","title":"世界观与规则集","name":"编号01·世界观与规则集.md","path":"files/orb/编号01·世界观与规则集.md","kb":12,"ext":"md","order":1},{"n":"02","title":"核心角色卡","name":"编号02·核心角色卡.md","path":"files/orb/编号02·核心角色卡.md","kb":23,"ext":"md","order":2},{"n":"03","title":"外部与辅助角色卡","name":"编号03·外部与辅助角色卡.md","path":"files/orb/编号03·外部与辅助角色卡.md","kb":15,"ext":"md","order":3}]},{"id":"lupat","cat":"sentai","name":"快盗战队 VS 警察战队","en":"LUPINRANGER VS PATRANGER","accent":"#FF4466","count":5,"kb":117,"zip":"downloads/lupat.zip","files":[{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.md","path":"files/lupat/编号00·运行核心与锚点.md","kb":25,"ext":"md","order":0},{"n":"01","title":"世界观、地点与设备","name":"编号01·世界观、地点与设备.md","path":"files/lupat/编号01·世界观、地点与设备.md","kb":13,"ext":"md","order":1},{"n":"02","title":"快盗侧","name":"编号02·快盗侧.md","path":"files/lupat/编号02·快盗侧.md","kb":27,"ext":"md","order":2},{"n":"03","title":"警察侧与日常侧","name":"编号03·警察侧与日常侧.md","path":"files/lupat/编号03·警察侧与日常侧.md","kb":27,"ext":"md","order":3},{"n":"04","title":"僵格拉侧","name":"编号04·僵格拉侧.md","path":"files/lupat/编号04·僵格拉侧.md","kb":27,"ext":"md","order":4}]},{"id":"gozyuger","cat":"sentai","name":"头号战队 豪兽者","en":"NO.1 SENTAI GOZYUGER","accent":"#FFC93C","count":5,"kb":157,"zip":"downloads/gozyuger.zip","files":[{"n":"00","title":"运行核心与锚点","name":"编号00·运行核心与锚点.md","path":"files/gozyuger/编号00·运行核心与锚点.md","kb":22,"ext":"md","order":0},{"n":"01","title":"世界观、戒指与争霸规则","name":"编号01·世界观、戒指与争霸规则.md","path":"files/gozyuger/编号01·世界观、戒指与争霸规则.md","kb":21,"ext":"md","order":1},{"n":"02","title":"豪兽者侧","name":"编号02·豪兽者侧.md","path":"files/gozyuger/编号02·豪兽者侧.md","kb":29,"ext":"md","order":2},{"n":"03","title":"布莱丹与灾厄侧","name":"编号03·布莱丹与灾厄侧.md","path":"files/gozyuger/编号03·布莱丹与灾厄侧.md","kb":47,"ext":"md","order":3},{"n":"04","title":"宇宙战士与日常侧","name":"编号04·宇宙战士与日常侧.md","path":"files/gozyuger/编号04·宇宙战士与日常侧.md","kb":38,"ext":"md","order":4}]}],"plugins":{"protocol":{"name":"特摄二创插件通道协议.md","title":"特摄二创插件通道协议","path":"files/plugins/特摄二创插件通道协议.md","kb":3,"ext":"md"},"note":{"name":"插件说明（先看这个）.jpg","path":"files/plugins/插件说明（先看这个）.jpg","kb":241,"ext":"jpg"},"own":[{"name":"[通用型][管理员权限][不同意提供].md","title":"管理员权限","path":"files/plugins/[通用型][管理员权限][不同意提供].md","kb":2,"ext":"md","by":"不同意"},{"name":"[通用型][无限财富][不同意提供].md","title":"无限财富","path":"files/plugins/[通用型][无限财富][不同意提供].md","kb":3,"ext":"md","by":"不同意"},{"name":"[通用型][性转苹果汁][不同意提供].md","title":"性转苹果汁","path":"files/plugins/[通用型][性转苹果汁][不同意提供].md","kb":2,"ext":"md","by":"不同意"},{"name":"[通用型][遗忘风铃][不同意提供].md","title":"遗忘风铃","path":"files/plugins/[通用型][遗忘风铃][不同意提供].md","kb":3,"ext":"md","by":"不同意"}],"guest":[{"name":"[通用型][假面骑士装B系统][。。。。提供].html","title":"假面骑士装B系统","path":"files/plugins/[通用型][假面骑士装B系统][。。。。提供].html","kb":7,"ext":"html","by":"。。。。"},{"name":"[假面骑士Drive][1-48集台词脚本][角色卡大更新][GAIM提供]","title":"Drive · 角色卡大更新","kind":"pack","dep":"假面骑士 Drive","by":"GAIM","zip":"downloads/pack-1.zip","kb":660,"count":7,"files":[{"name":"编号00·运行核心与锚点.docx","title":"编号00·运行核心与锚点","path":"files/plugins/pack-1/编号00·运行核心与锚点.docx","kb":38},{"name":"编号01·世界驾驶手册.docx","title":"编号01·世界驾驶手册","path":"files/plugins/pack-1/编号01·世界驾驶手册.docx","kb":33},{"name":"编号02·驾驶席上的核心骑士.docx","title":"编号02·驾驶席上的核心骑士","path":"files/plugins/pack-1/编号02·驾驶席上的核心骑士.docx","kb":41},{"name":"编号03·Roidmude阵营档案.docx","title":"编号03·Roidmude阵营档案","path":"files/plugins/pack-1/编号03·Roidmude阵营档案.docx","kb":41},{"name":"编号04·特状课与辅助阵营.docx","title":"编号04·特状课与辅助阵营","path":"files/plugins/pack-1/编号04·特状课与辅助阵营.docx","kb":42},{"name":"假面骑士Drive·角色卡档案.docx","title":"假面骑士Drive·角色卡档案","path":"files/plugins/pack-1/假面骑士Drive·角色卡档案.docx","kb":101},{"name":"假面骑士Drive·原作台词脚本全集.docx","title":"假面骑士Drive·原作台词脚本全集","path":"files/plugins/pack-1/假面骑士Drive·原作台词脚本全集.docx","kb":365}],"note":"1-48集台词脚本"}],"zip":"downloads/plugins.zip"},"stats":{"works":15,"files":84,"plugins":6}};
 /* DATA_END */
 </script>
 
@@ -998,12 +1070,16 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
     zip.setAttribute('download', s.name.replace(/[\\/:*?"<>|\s]+/g,'') + '·设定合集.zip');
     zip.textContent = '打包下载 · ' + s.count + ' 份 / ' + fmtKB(s.kb);
     $('fileList').innerHTML = (s.files||[]).map(function(f){
-      return '<li><a class="row" href="'+encPath(f.path)+'" download="'+esc(f.name)+'">'
+      var canRead = /^(md|txt)$/i.test(f.ext||'');
+      var title = canRead
+        ? '<button class="rt" type="button" data-path="'+esc(f.path)+'" data-name="'+esc(f.name)+'" data-title="'+esc(f.title)+'" data-n="'+esc(f.n||'')+'" data-ext="'+esc(f.ext||'md')+'" data-kb="'+(f.kb||0)+'">'+esc(f.title)+'</button>'
+        : '<span class="rt plain">'+esc(f.title)+'</span>';
+      return '<li><div class="row">'
         + '<span class="rn'+(f.n?'':' dash')+'">'+(f.n?esc(f.n):'FILE')+'</span>'
-        + '<span class="rt">'+esc(f.title)+'</span>'
+        + title
         + '<span class="rm">'+esc((f.ext||'').toUpperCase())+' · '+fmtKB(f.kb)+'</span>'
-        + '<span class="rd">↓</span>'
-        + '</a></li>';
+        + '<a class="rd" href="'+encPath(f.path)+'" download="'+esc(f.name)+'" aria-label="下载">↓</a>'
+        + '</div></li>';
     }).join('');
     $('sheet').classList.add('open');
     $('sheet').setAttribute('aria-hidden','false');
@@ -1017,6 +1093,127 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
     if(history.replaceState) history.replaceState(null,'',location.pathname);
     cur = null;
   }
+
+  // ---------- 在线阅览 ----------
+  var rdPath = '';
+  function mdInline(s){
+    s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+    s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    s = s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+    s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    return s;
+  }
+  function mdToHtml(src){
+    src = String(src).replace(/\r\n?/g,'\n');
+    var fences = [];
+    src = src.replace(/```[^\n]*\n([\s\S]*?)```/g, function(_, code){
+      fences.push('<pre><code>' + esc(code) + '</code></pre>');
+      return '\u0001F' + (fences.length-1) + '\u0001F';
+    });
+    var lines = src.split('\n');
+    var out = [], listType = null, quoteBuf = [];
+    function flushQuote(){
+      if(!quoteBuf.length) return;
+      out.push('<blockquote>' + quoteBuf.map(mdInline).join('<br>') + '</blockquote>');
+      quoteBuf = [];
+    }
+    function closeList(){
+      if(listType){ out.push('</' + listType + '>'); listType = null; }
+    }
+    for(var i = 0; i < lines.length; i++){
+      var L = lines[i];
+      var fm = L.trim().match(/^\u0001F(\d+)\u0001F$/);
+      if(fm){ closeList(); flushQuote(); out.push(fences[+fm[1]]); continue; }
+      if(!L.trim()){
+        // 列表项之间常有空行，空行后若仍是同类列表就不收尾，避免每项重新从 1 编号
+        if(listType){
+          var j = i + 1;
+          while(j < lines.length && !lines[j].trim()) j++;
+          var nxt = (j < lines.length) ? lines[j] : '';
+          var same = (listType === 'ol') ? /^\s*\d+[.)]\s+/.test(nxt) : /^\s*[-*+]\s+/.test(nxt);
+          if(same) continue;
+        }
+        closeList(); flushQuote(); continue;
+      }
+      var h = L.match(/^(#{1,4})\s+(.*)$/);
+      if(h){ closeList(); flushQuote(); var lv = h[1].length; out.push('<h' + lv + '>' + mdInline(esc(h[2])) + '</h' + lv + '>'); continue; }
+      if(/^(\*\s*){3,}$|^(-{3,})$/m.test(L.trim()) && L.trim().length <= 6){ closeList(); flushQuote(); out.push('<hr>'); continue; }
+      var q = L.match(/^>\s?(.*)$/);
+      if(q){ closeList(); quoteBuf.push(esc(q[1])); continue; }
+      flushQuote();
+      var ul = L.match(/^\s*[-*+]\s+(.*)$/);
+      if(ul){
+        if(listType !== 'ul'){ closeList(); out.push('<ul>'); listType = 'ul'; }
+        out.push('<li>' + mdInline(esc(ul[1])) + '</li>'); continue;
+      }
+      var ol = L.match(/^\s*\d+[.)]\s+(.*)$/);
+      if(ol){
+        if(listType !== 'ol'){ closeList(); out.push('<ol>'); listType = 'ol'; }
+        out.push('<li>' + mdInline(esc(ol[1])) + '</li>'); continue;
+      }
+      closeList();
+      out.push('<p>' + mdInline(esc(L)) + '</p>');
+    }
+    closeList(); flushQuote();
+    return out.join('\n');
+  }
+  function openReader(f){
+    var a = (cur && cur.accent) || '#35E7FF';
+    var card = $('reader').querySelector('.rd-card');
+    card.style.setProperty('--a', a);
+    $('rdN').textContent = f.n || 'FILE';
+    $('rdN').style.color = a;
+    $('rdN').style.borderColor = a;
+    $('rdTitle').textContent = f.title;
+    $('rdMeta').textContent = (f.ext||'md').toUpperCase() + ' · ' + fmtKB(f.kb||0) + (cur ? '  /  ' + cur.name : '');
+    var dl = $('rdDl');
+    dl.href = encPath(f.path);
+    dl.setAttribute('download', f.name);
+    rdPath = f.path;
+    $('rdBody').innerHTML = '<p style="color:var(--dim2)">正在读取…</p>';
+    $('reader').classList.add('open');
+    $('reader').setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    fetch(encPath(f.path), {cache:'no-cache'}).then(function(r){
+      if(!r.ok) throw new Error(r.status);
+      return r.text();
+    }).then(function(t){
+      $('rdBody').innerHTML = mdToHtml(t);
+      $('rdBody').scrollTop = 0;
+      if(history.replaceState){
+        history.replaceState(null,'', location.pathname + '?w=' + encodeURIComponent(cur.id) + '&read=' + encodeURIComponent(f.name));
+      }
+    }).catch(function(){
+      $('rdBody').innerHTML = '<p style="color:var(--dim)">读不到内容（网络不稳，或文件还没上传）。点右上角「下载原件」照样能拿到。</p>';
+    });
+  }
+  function closeReader(){
+    $('reader').classList.remove('open');
+    $('reader').setAttribute('aria-hidden','true');
+    rdPath = '';
+    if(cur){
+      document.body.style.overflow = 'hidden';
+      if(history.replaceState) history.replaceState(null,'','?w='+encodeURIComponent(cur.id));
+    } else {
+      document.body.style.overflow = '';
+      if(history.replaceState) history.replaceState(null,'',location.pathname);
+    }
+  }
+  $('rdClose').addEventListener('click', closeReader);
+  $('reader').addEventListener('click', function(e){ if(e.target === this) closeReader(); });
+  $('fileList').addEventListener('click', function(e){
+    var b = e.target.closest('[data-path]');
+    if(!b) return;
+    e.preventDefault();
+    openReader({
+      path: b.getAttribute('data-path'),
+      name: b.getAttribute('data-name'),
+      title: b.getAttribute('data-title'),
+      n: b.getAttribute('data-n'),
+      ext: b.getAttribute('data-ext'),
+      kb: parseFloat(b.getAttribute('data-kb')) || 0
+    });
+  });
 
   // ---------- 插件工坊 ----------
   (function renderPlugins(){
@@ -1083,7 +1280,11 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
   });
   $('btnClose').addEventListener('click', closeSheet);
   $('sheet').addEventListener('click', function(e){ if(e.target === this) closeSheet(); });
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ closeSheet(); closeModal(); } });
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Escape') return;
+    if($('reader').classList.contains('open')){ closeReader(); return; }
+    closeSheet(); closeModal();
+  });
 
   $('sheetShare').addEventListener('click', function(){
     if(!cur) return;
@@ -1105,8 +1306,22 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
 
   // ---------- 深链 ----------
   var m = location.search.match(/w=([^&]+)/);
+  var rd = location.search.match(/read=([^&]+)/);
   render();
-  if(m){ setTimeout(function(){ openSheet(decodeURIComponent(m[1])); }, 120); }
+  if(m){
+    setTimeout(function(){
+      var sid = decodeURIComponent(m[1]);
+      openSheet(sid);
+      if(rd){
+        var fname = decodeURIComponent(rd[1]);
+        setTimeout(function(){
+          var s = series.filter(function(x){ return x.id === sid; })[0];
+          var f = s && (s.files||[]).filter(function(y){ return y.name === fname; })[0];
+          if(f) openReader(f);
+        }, 260);
+      }
+    }, 120);
+  }
 
   // ---------- 启动动画 ----------
   var booted = false;
