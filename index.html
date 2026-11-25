@@ -491,6 +491,16 @@ html[data-theme="light"] .proto-badge{color:#FFFFFF}
   font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.1em;color:var(--dim2);
 }
 .pitem .pmeta em{font-style:normal;color:var(--violet);font-weight:700;white-space:nowrap}
+/* 插件卡动作：在线看 / 打开 / 下载 */
+.pitem .pact{display:flex;align-items:center;gap:9px;flex:0 0 auto}
+.pitem .pa{
+  font:inherit;font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.1em;
+  background:none;border:0;padding:0;color:var(--violet);font-weight:700;cursor:pointer;
+  text-decoration:none;white-space:nowrap;transition:.18s;
+}
+.pitem .pa:hover{color:var(--ink)}
+.pitem .pa.dl{color:var(--dim2);font-weight:500}
+.pitem .pa.dl:hover{color:var(--violet)}
 /* 投稿作者署名：让粉丝一眼看到是谁给的 */
 .pitem .byline{
   align-self:flex-start;display:inline-flex;align-items:center;gap:4px;
@@ -1173,11 +1183,11 @@ html[data-theme="light"] .card .sheen{background:linear-gradient(105deg,transpar
         </ul>
       </div>
       <div id="adOn" style="display:none">
-        <p>已经接上百度统计了。粉丝每点开一部作品就记一次，点「打包下载」和打开在线阅览时，各记一条事件。</p>
+        <p>已经接上百度统计了。粉丝点开一部作品会记一次页面；作品的「打包下载」、设定的在线阅读、插件的「在线看 / 打开 / 下载」，各记一条事件。</p>
         <ul class="ad-steps">
           <li><i>01</i><span>打开百度统计后台 →「分析」→「页面 URL」报表</span></li>
           <li><i>02</i><span>搜 <b>?w=</b>，一行就是一部作品：<b>?w=ryuki</b>、<b>?w=faiz</b>…</span></li>
-          <li><i>03</i><span>「实时访客」看刚刚谁在点，「事件分析」里看下载和阅览</span></li>
+          <li><i>03</i><span>「实时访客」看刚刚谁在点；「事件分析」里按「插件 / 打开 / 浏览 / 下载」看单个插件的热度</span></li>
         </ul>
         <p>数据不是秒到的，页面报表一般要等几分钟；「实时访客」是实时的。</p>
       </div>
@@ -1507,11 +1517,12 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
     var a = (cur && cur.accent) || '#35E7FF';
     var card = $('reader').querySelector('.rd-card');
     card.style.setProperty('--a', a);
-    $('rdN').textContent = f.n || 'FILE';
+    $('rdN').textContent = f.n || (f.tag || 'FILE');
     $('rdN').style.color = a;
     $('rdN').style.borderColor = a;
     $('rdTitle').textContent = f.title;
-    $('rdMeta').textContent = (f.ext||'md').toUpperCase() + ' · ' + fmtKB(f.kb||0) + (cur ? '  /  ' + cur.name : '');
+    var sub = cur ? '  /  ' + cur.name : (f.src ? '  /  ' + f.src : '');
+    $('rdMeta').textContent = (f.ext||'md').toUpperCase() + ' · ' + fmtKB(f.kb||0) + sub;
     var dl = $('rdDl');
     dl.href = encPath(f.path);
     dl.setAttribute('download', f.name);
@@ -1521,7 +1532,6 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
     $('reader').setAttribute('aria-hidden','false');
     document.body.style.overflow = 'hidden';
     sfx('tap');
-    track(['_trackEvent','阅读','设定', f.name]);
     fetch(encPath(f.path), {cache:'no-cache'}).then(function(r){
       if(!r.ok) throw new Error(r.status);
       return r.text();
@@ -1529,7 +1539,9 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
       $('rdBody').innerHTML = mdToHtml(t);
       $('rdBody').scrollTop = 0;
       if(history.replaceState){
-        history.replaceState(null,'', location.pathname + '?w=' + encodeURIComponent(cur.id) + '&read=' + encodeURIComponent(f.name));
+        history.replaceState(null,'', location.pathname + (cur
+          ? '?w=' + encodeURIComponent(cur.id) + '&read=' + encodeURIComponent(f.name)
+          : '?p=' + encodeURIComponent(f.name)));
       }
     }).catch(function(){
       $('rdBody').innerHTML = '<p style="color:var(--dim)">读不到内容（网络不稳，或文件还没上传）。点右上角「下载原件」照样能拿到。</p>';
@@ -1538,8 +1550,7 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
   function closeReader(){
     $('reader').classList.remove('open');
     $('reader').setAttribute('aria-hidden','true');
-    rdPath = '';
-    if(cur){
+    rdPath = '';    if(cur){
       document.body.style.overflow = 'hidden';
       if(history.replaceState) history.replaceState(null,'','?w='+encodeURIComponent(cur.id));
     } else {
@@ -1553,6 +1564,7 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
     var b = e.target.closest('[data-path]');
     if(!b) return;
     e.preventDefault();
+    track(['_trackEvent','阅读','设定', b.getAttribute('data-name')]);
     openReader({
       path: b.getAttribute('data-path'),
       name: b.getAttribute('data-name'),
@@ -1568,15 +1580,15 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
     var proto = PL.protocol;
     if(proto){
       var noteBtn = PL.note
-        ? '<a class="btn btn-ghost" href="'+encPath(PL.note.path)+'" download="'+esc(PL.note.name)+'">使用说明图</a>'
+        ? '<a class="btn btn-ghost" href="'+encPath(PL.note.path)+'" download="'+esc(PL.note.name)+'" data-tr="协议|下载|使用说明图">使用说明图</a>'
         : '';
       $('proto').innerHTML =
         '<span class="proto-badge">必装 · 面向 AI</span>'
         + '<h3>'+esc(proto.title)+'</h3>'
         + '<p>这不是剧情，是一条给 AI 看的<b>通道</b>：加载它之后，任何额外的插件、二创设定都能插进任意一部作品，并且<b>插件优先级高于基础设定</b>——冲突时以插件为准。协议和插件要<b>一起发给 AI</b>，协议就是转换插头。</p>'
         + '<div class="proto-act">'
-        +   '<a class="btn btn-primary" href="'+encPath(proto.path)+'" download="'+esc(proto.name)+'" style="background:var(--violet);color:var(--proto-ink);box-shadow:none">下载协议 · '+fmtKB(proto.kb)+'</a>'
-        +   '<a class="btn btn-ghost" href="'+encPath(PL.zip||'downloads/plugins.zip')+'" download="插件包.zip">下载全部插件</a>'
+        +   '<a class="btn btn-primary" href="'+encPath(proto.path)+'" download="'+esc(proto.name)+'" style="background:var(--violet);color:var(--proto-ink);box-shadow:none" data-tr="协议|下载|通道协议">下载协议 · '+fmtKB(proto.kb)+'</a>'
+        +   '<a class="btn btn-ghost" href="'+encPath(PL.zip||'downloads/plugins.zip')+'" download="插件包.zip" data-tr="插件|下载|插件包">下载全部插件</a>'
         +   noteBtn
         + '</div>';
     } else {
@@ -1587,7 +1599,7 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
         var byline = (p.by && withBy) ? ('<span class="byline">作者 · '+esc(p.by)+'</span>') : '';
         if(p.kind === 'pack'){
           var lst = (p.files||[]).map(function(f){
-            return '<a href="'+encPath(f.path)+'" download="'+esc(f.name)+'" title="'+esc(f.name)+'">'+esc(f.title||f.name)+'</a>';
+            return '<a href="'+encPath(f.path)+'" download="'+esc(f.name)+'" title="'+esc(f.name)+'" data-tr="扩展包|下载|'+esc(p.title||'')+'">'+esc(f.title||f.name)+'</a>';
           }).join('');
           return '<div class="pitem pack">'
             + byline
@@ -1595,20 +1607,53 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
             + '<h4>'+esc(p.title)+'</h4>'
             + '<p class="depnote">不能单独开局：先加载《'+esc(p.dep||'原作')+'》的 00 号基础设定，再加载这个包。</p>'
             + '<ul class="packfiles">'+lst+'</ul>'
-            + '<a class="btn btn-ghost" href="'+encPath(p.zip)+'" download="'+esc(p.title||'扩展包')+'.zip">打包下载 · '+(p.count||0)+' 份 · '+fmtKB(p.kb)+'</a>'
+            + '<a class="btn btn-ghost" href="'+encPath(p.zip)+'" download="'+esc(p.title||'扩展包')+'.zip" data-tr="扩展包|下载|'+esc(p.title||'')+'">打包下载 · '+(p.count||0)+' 份 · '+fmtKB(p.kb)+'</a>'
             + '<div class="pmeta"><span>PACK · '+(p.count||0)+' 份</span><em>下载 ↓</em></div>'
             + '</div>';
         }
-        return '<a class="pitem" href="'+encPath(p.path)+'" download="'+esc(p.name)+'">'
+        var acts = '', ext = (p.ext||'').toLowerCase();
+        if(ext === 'md' || ext === 'txt'){
+          acts += '<button class="pa" type="button" data-open="'+esc(p.path)+'" data-name="'+esc(p.name)+'" data-title="'+esc(p.title)+'" data-kb="'+(p.kb||0)+'" data-src="'+esc(p.by||'')+'">在线看</button>';
+        } else if(ext === 'html'){
+          acts += '<a class="pa" href="'+encPath(p.path)+'" target="_blank" rel="noopener" data-tr="插件|打开|'+esc(p.title)+'">打开</a>';
+        }
+        acts += '<a class="pa dl" href="'+encPath(p.path)+'" download="'+esc(p.name)+'" data-tr="插件|下载|'+esc(p.title)+'">下载 ↓</a>';
+        return '<div class="pitem">'
           + byline
           + '<h4>'+esc(p.title)+'</h4>'
-          + '<div class="pmeta"><span>'+esc((p.ext||'').toUpperCase())+' · '+fmtKB(p.kb)+'</span><em>下载 ↓</em></div>'
-          + '</a>';
+          + '<div class="pmeta"><span>'+esc((p.ext||'').toUpperCase())+' · '+fmtKB(p.kb)+'</span><span class="pact">'+acts+'</span></div>'
+          + '</div>';
       }).join('');
     }
     $('pgridOwn').innerHTML = items(PL.own, false);
     $('pgridGuest').innerHTML = items(PL.guest, true);
     $('guestEmpty').style.display = (PL.guest||[]).length ? 'none' : 'block';
+
+    // 插件：在线看 + 埋点（浏览 / 打开 / 下载）
+    ['pgridOwn','pgridGuest','proto'].forEach(function(id){
+      var box = $(id); if(!box) return;
+      box.addEventListener('click', function(e){
+        var o = e.target.closest('[data-open]');
+        if(o){
+          e.preventDefault();
+          track(['_trackEvent','插件','浏览', o.getAttribute('data-title')||'']);
+          openReader({
+            path: o.getAttribute('data-open'),
+            name: o.getAttribute('data-name'),
+            title: o.getAttribute('data-title'),
+            ext: 'md', tag: 'PLUGIN',
+            kb: parseFloat(o.getAttribute('data-kb')) || 0,
+            src: o.getAttribute('data-src') || ''
+          });
+          return;
+        }
+        var a = e.target.closest('[data-tr]');
+        if(a){
+          var parts = a.getAttribute('data-tr').split('|');
+          track(['_trackEvent', parts[0], parts[1], parts[2] || '']);
+        }
+      });
+    });
   })();
 
   // ---------- 交互 ----------
