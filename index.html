@@ -526,6 +526,18 @@ html[data-theme="light"] .proto-badge{color:#FFFFFF}
 .foot-note b{color:var(--ink);font-weight:500}
 .foot-note .tiny{display:block;margin-top:12px;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.12em;color:var(--dim2)}
 .foot-act{display:flex;gap:10px;flex-wrap:wrap}
+/* 末尾署名 */
+.sign{
+  position:relative;z-index:2;
+  padding:26px max(18px,calc(50% - 620px)) 40px;
+  border-top:1px solid var(--line2);
+  text-align:center;display:grid;gap:7px;
+}
+.sign p{margin:0}
+.sign .s1{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.14em;color:var(--dim2)}
+.sign .s2{font-size:12px;color:var(--dim);letter-spacing:.02em}
+.sign .s2 s{text-decoration:none;color:var(--hot);margin:0 .35em}
+.sign .s3{font-size:12px;color:var(--hot);letter-spacing:.02em}
 
 /* ================= 档案面板 ================= */
 #sheet{
@@ -666,6 +678,8 @@ html[data-theme="light"] .panel-act .btn-primary{color:#FFFFFF}
   .pitem{padding:12px 13px}
   .pitem.pack{grid-column:span 2}
   .foot{padding:24px 16px}
+  .sign{padding:22px 16px 30px}
+  .sign .s2{font-size:11.5px}
 }
 @media(max-width:520px){
   .hero-side{display:none}
@@ -799,6 +813,12 @@ html[data-theme="light"] .panel-act .btn-primary{color:#FFFFFF}
     <a class="btn btn-ghost" href="#workshop">去插件工坊</a>
   </div>
 </footer>
+
+<div class="sign">
+  <p class="s1">© 2026 不同意</p>
+  <p class="s2">兴趣使然，随手所作 <s>·</s> 存档保存在本机浏览器</p>
+  <p class="s3">本站代码在 AI 辅助下完成</p>
+</div>
 
 <div id="sheet" aria-hidden="true">
   <div class="panel" role="dialog" aria-modal="true" aria-labelledby="sheetName">
