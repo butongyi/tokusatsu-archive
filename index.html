@@ -16,7 +16,7 @@ try{
 </script>
 <!-- 流量统计开关：把百度统计的 32 位代码填进 TS_YTB 就生效，留空则完全不加载 -->
 <script>
-window.TS_YTB = "";
+window.TS_YTB = "a0dcd56013822f8835273efba6bd8708";
 window._hmt = window._hmt || [];
 (function(){
   if(!window.TS_YTB) return;
@@ -810,6 +810,12 @@ body.ad-lock{overflow:hidden}
 .ad-src{margin:10px 0 0;font-size:11px;line-height:1.7;color:var(--dim2)}
 .ad-card{margin:18px 0 0;padding:17px 16px 16px;background:var(--panel-bg);border:1px solid var(--panel-line)}
 .ad-card h3{margin:0;font-size:15px;font-weight:800;letter-spacing:.01em}
+.ad-h{display:flex;align-items:center;gap:10px;justify-content:space-between}
+.ad-state{
+  flex:0 0 auto;font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.1em;
+  padding:3px 7px;border:1px solid var(--line);color:var(--dim2);white-space:nowrap;
+}
+.ad-state.on{color:#3DDC97;border-color:rgba(61,220,151,.5);background:rgba(61,220,151,.08)}
 .ad-card .en{margin:6px 0 0;font-family:ui-monospace,monospace;font-size:9px;letter-spacing:.18em;color:var(--dim2)}
 .ad-card p{margin:10px 0 0;font-size:12.5px;line-height:1.85;color:var(--sub)}
 .ad-card p b{color:var(--ink);font-weight:700}
@@ -1048,15 +1054,28 @@ body.ad-lock{overflow:hidden}
     <p class="ad-src" id="adSrc">正在取数…</p>
 
     <div class="ad-card">
-      <h3>单部作品被看过多少次</h3>
+      <div class="ad-h">
+        <h3>单部作品被看过多少次</h3>
+        <span class="ad-state" id="adState">未接入</span>
+      </div>
       <p class="en">PER - WORK DATA</p>
-      <p>上面是整站的合计。要拆到<b>每部作品</b>、看每天的走势和粉丝从哪来，就得挂一套正式的流量统计——我这个站是静态的，没有服务器，自己存不了访问记录，只能借第三方的。</p>
-      <ul class="ad-steps">
-        <li><i>01</i><span>打开百度统计，手机号注册，1 分钟</span></li>
-        <li><i>02</i><span>添加网站，域名填 butongyi.github.io，验证方式选「HTML 标签」</span></li>
-        <li><i>03</i><span>把拿到的那串 32 位代码发我，我接进站里，你就能在后台看分作品数据</span></li>
-      </ul>
-      <p>接好之后，粉丝每点开一部作品就算一次，百度统计的「页面 URL」报表里会按 <b>?w=作品名</b> 一行一部列出来。</p>
+      <div id="adOff">
+        <p>上面是整站的合计。要拆到<b>每部作品</b>、看每天的走势和粉丝从哪来，就得挂一套正式的流量统计——我这个站是静态的，没有服务器，自己存不了访问记录，只能借第三方的。</p>
+        <ul class="ad-steps">
+          <li><i>01</i><span>打开百度统计，手机号注册，1 分钟</span></li>
+          <li><i>02</i><span>添加网站，域名填 butongyi.github.io，验证方式选「HTML 标签」</span></li>
+          <li><i>03</i><span>把拿到的那串 32 位代码发我，我接进站里，你就能在后台看分作品数据</span></li>
+        </ul>
+      </div>
+      <div id="adOn" style="display:none">
+        <p>已经接上百度统计了。粉丝每点开一部作品就记一次，点「打包下载」和打开在线阅览时，各记一条事件。</p>
+        <ul class="ad-steps">
+          <li><i>01</i><span>打开百度统计后台 →「分析」→「页面 URL」报表</span></li>
+          <li><i>02</i><span>搜 <b>?w=</b>，一行就是一部作品：<b>?w=ryuki</b>、<b>?w=faiz</b>…</span></li>
+          <li><i>03</i><span>「实时访客」看刚刚谁在点，「事件分析」里看下载和阅览</span></li>
+        </ul>
+        <p>数据不是秒到的，页面报表一般要等几分钟；「实时访客」是实时的。</p>
+      </div>
       <div class="ad-act">
         <a class="btn btn-primary" href="https://tongji.baidu.com/" target="_blank" rel="noopener">打开百度统计</a>
       </div>
@@ -1490,6 +1509,12 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
     $('adF').textContent = (D.stats && D.stats.files) || 0;
     $('adP').textContent = (D.stats && D.stats.plugins) || 0;
     $('adKb').textContent = fmtKB(series.reduce(function(a, s){ return a + (s.kb || 0); }, 0));
+    if(window.TS_YTB){
+      $('adState').textContent = '已接入';
+      $('adState').className = 'ad-state on';
+      $('adOff').style.display = 'none';
+      $('adOn').style.display = '';
+    }
     loadBsz();
   }
   function closeAdmin(){
