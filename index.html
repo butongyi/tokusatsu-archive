@@ -837,6 +837,102 @@ body.ad-lock{overflow:hidden}
   .ad-top .ad-ttl span{display:none}
   .ad-big .b.full b{font-size:clamp(26px,9vw,34px)}
 }
+
+/* ================= 特摄化皮肤：HUD·装甲·音效 ================= */
+:root{
+  --scan:rgba(255,255,255,.028);
+  --hud:rgba(53,231,255,.42);
+  --tube:rgba(53,231,255,.38);
+  --beam:rgba(53,231,255,.07);
+}
+html[data-theme="light"]{
+  --scan:rgba(15,26,40,.026);
+  --hud:rgba(14,143,168,.45);
+  --tube:rgba(14,143,168,.22);
+  --beam:rgba(14,143,168,.055);
+}
+
+/* 顶栏底部：腰带充能条 */
+.top-charge{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--line2);overflow:hidden}
+.top-charge i{
+  display:block;height:100%;width:0;background:linear-gradient(90deg,var(--neon),var(--hot));
+  box-shadow:0 0 10px var(--neon);transition:width .12s linear;
+}
+
+/* 音效开关 */
+#btnSound{position:relative}
+#btnSound[data-on="0"]{color:var(--dim2)}
+#btnSound[data-on="1"]{color:var(--neon);border-color:var(--chip-on-line);background:var(--chip-on-bg)}
+#btnSound[data-on="0"] .s-on{display:none}
+#btnSound[data-on="1"] .s-off{display:none}
+
+/* Hero：扫描线 + 扫过的光带 + 数码管数字 */
+.hero-scan{
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,var(--scan) 0 1px,transparent 1px 3px);
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 16%,#000 84%,transparent);
+  mask-image:linear-gradient(180deg,transparent,#000 16%,#000 84%,transparent);
+}
+.hero-beam{
+  position:absolute;top:-30%;left:-45%;width:38%;height:170%;z-index:0;pointer-events:none;
+  background:linear-gradient(90deg,transparent,var(--beam) 40%,var(--beam) 60%,transparent);
+  transform:skewX(-16deg);animation:beam-run 10s linear infinite;
+}
+@keyframes beam-run{0%{transform:translateX(0) skewX(-16deg)}55%,100%{transform:translateX(270%) skewX(-16deg)}}
+.hero-stats .stat b{font-variant-numeric:tabular-nums;text-shadow:0 0 18px var(--tube)}
+.hero-stats .stat span{position:relative}
+.hero-stats .stat span::before{
+  content:'';display:inline-block;width:3px;height:8px;margin-right:6px;vertical-align:0;
+  background:var(--hud);box-shadow:0 0 8px var(--hud);
+}
+
+/* 作品卡：装甲角标 + 腰带光段 */
+.card::before{
+  content:'';position:absolute;inset:6px;z-index:3;pointer-events:none;
+  background:
+    linear-gradient(var(--a),var(--a)) left top / 11px 1px no-repeat,
+    linear-gradient(var(--a),var(--a)) left top / 1px 11px no-repeat,
+    linear-gradient(var(--a),var(--a)) right top / 11px 1px no-repeat,
+    linear-gradient(var(--a),var(--a)) right top / 1px 11px no-repeat,
+    linear-gradient(var(--a),var(--a)) left bottom / 11px 1px no-repeat,
+    linear-gradient(var(--a),var(--a)) left bottom / 1px 11px no-repeat,
+    linear-gradient(var(--a),var(--a)) right bottom / 11px 1px no-repeat,
+    linear-gradient(var(--a),var(--a)) right bottom / 1px 11px no-repeat;
+  opacity:0;transition:opacity .3s;
+}
+.card:hover::before,.card:focus-visible::before{opacity:.6}
+.card::after{width:16%;background:linear-gradient(90deg,var(--a),transparent);opacity:.85}
+.card:hover::after,.card:focus-visible::after{width:100%;background:var(--a)}
+
+/* 启动：进度条 */
+.boot-bar{width:148px;height:2px;background:var(--line);overflow:hidden;margin-top:4px}
+.boot-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--neon),var(--hot));animation:bootfill 1.15s cubic-bezier(.4,0,.25,1) forwards}
+@keyframes bootfill{to{width:100%}}
+
+/* 首屏 HUD 四角 */
+.hero-hud{
+  position:absolute;inset:10px;z-index:0;pointer-events:none;
+  background:
+    linear-gradient(var(--hud),var(--hud)) left top / 16px 1px no-repeat,
+    linear-gradient(var(--hud),var(--hud)) left top / 1px 16px no-repeat,
+    linear-gradient(var(--hud),var(--hud)) right top / 16px 1px no-repeat,
+    linear-gradient(var(--hud),var(--hud)) right top / 1px 16px no-repeat,
+    linear-gradient(var(--hud),var(--hud)) left bottom / 16px 1px no-repeat,
+    linear-gradient(var(--hud),var(--hud)) left bottom / 1px 16px no-repeat,
+    linear-gradient(var(--hud),var(--hud)) right bottom / 16px 1px no-repeat,
+    linear-gradient(var(--hud),var(--hud)) right bottom / 1px 16px no-repeat;
+  opacity:.55;
+}
+/* 卡片扫光 */
+.card .sheen{
+  position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;
+  background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.55) 50%,transparent 62%);
+  transform:translateX(-130%);opacity:0;
+  transition:transform .7s cubic-bezier(.2,.7,.3,1),opacity .4s;
+  mix-blend-mode:screen;
+}
+html[data-theme="light"] .card .sheen{background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.9) 50%,transparent 62%);mix-blend-mode:normal}
+.card:hover .sheen,.card:focus-visible .sheen{transform:translateX(130%);opacity:.28}
 </style>
 </head>
 <body>
@@ -845,6 +941,7 @@ body.ad-lock{overflow:hidden}
   <div class="boot-ring"></div>
   <div class="boot-line" id="bootLine">STANDING BY</div>
   <div class="boot-sub">TOKUSATSU / SETTING ARCHIVE</div>
+  <div class="boot-bar"><i></i></div>
 </div>
 <div class="boot-flash" id="flash"></div>
 
@@ -856,6 +953,10 @@ body.ad-lock{overflow:hidden}
   </div>
   <div class="top-right">
     <div class="status"><i></i>ARCHIVE ONLINE</div>
+    <button class="icon-btn" id="btnSound" data-on="0" aria-label="音效开关" title="音效：关">
+      <svg class="s-on" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9.5h3l5-3.5v12l-5-3.5H4z"/><path d="M16 8.5a4.4 4.4 0 0 1 0 7"/><path d="M18.6 5.8a8 8 0 0 1 0 12.4"/></svg>
+      <svg class="s-off" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9.5h3l5-3.5v12l-5-3.5H4z"/><path d="M16.5 9.5l5 5M21.5 9.5l-5 5"/></svg>
+    </button>
     <button class="icon-btn theme-btn" id="btnTheme" aria-label="切换日夜模式" title="切换日夜模式">
       <svg class="i-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.2"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4"/></svg>
       <svg class="i-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 14.5A8.2 8.2 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
@@ -864,9 +965,13 @@ body.ad-lock{overflow:hidden}
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.6 2.6 0 1 1 3.4 2.5c-.6.2-.9.7-.9 1.4v.4"/><circle cx="12" cy="17.4" r=".9" fill="currentColor" stroke="none"/></svg>
     </button>
   </div>
+  <div class="top-charge"><i id="chargeBar"></i></div>
 </header>
 
 <section class="hero">
+  <div class="hero-hud" aria-hidden="true"></div>
+  <div class="hero-scan" aria-hidden="true"></div>
+  <div class="hero-beam" aria-hidden="true"></div>
   <div class="hero-ring" aria-hidden="true">
     <div class="ring-layer r1"></div>
     <div class="ring-layer r2"></div>
@@ -1161,16 +1266,95 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
   }
   $('btnTheme').addEventListener('click', function(){
     applyTheme(theme() === 'light' ? 'dark' : 'light');
+    sfx('tap');
     toast(theme() === 'light' ? '已切到日间模式' : '已切到夜间模式');
   });
   var qt = location.search.match(/[?&]theme=(light|dark)/);
   if(qt) applyTheme(qt[1]);
 
+  // ---------- 音效（默认关，合成音，不加载任何音频文件） ----------
+  var sndOn = false;
+  try{ sndOn = localStorage.getItem('ts.sound') === '1'; }catch(e){}
+  var actx = null;
+  function audio(){
+    if(!sndOn) return null;
+    try{
+      if(!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+      if(actx.state === 'suspended') actx.resume();
+      return actx;
+    }catch(e){ return null; }
+  }
+  function tone(freq, dur, type, gain, delay){
+    var ac = audio(); if(!ac) return;
+    var t0 = ac.currentTime + (delay || 0);
+    var o = ac.createOscillator(), g = ac.createGain();
+    o.type = type || 'square';
+    o.frequency.setValueAtTime(freq, t0);
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.linearRampToValueAtTime(gain || .1, t0 + .015);
+    g.gain.exponentialRampToValueAtTime(.0001, t0 + dur);
+    o.connect(g); g.connect(ac.destination);
+    o.start(t0); o.stop(t0 + dur + .03);
+  }
+  function sfx(name){
+    if(!sndOn) return;
+    if(name === 'open'){ tone(620,.07,'square',.09); tone(980,.1,'square',.08,.08); }
+    else if(name === 'close'){ tone(400,.09,'sine',.07); }
+    else if(name === 'load'){ tone(280,.3,'sawtooth',.06); tone(620,.18,'square',.05,.07); tone(880,.1,'square',.05,.16); }
+    else if(name === 'henshin'){ tone(460,.5,'sawtooth',.09); tone(1080,.22,'square',.07,.2); }
+    else if(name === 'tap'){ tone(900,.05,'square',.05); }
+  }
+  var soundBtn = $('btnSound');
+  function paintSound(){
+    soundBtn.setAttribute('data-on', sndOn ? '1' : '0');
+    soundBtn.setAttribute('title', sndOn ? '音效：开' : '音效：关');
+    soundBtn.setAttribute('aria-pressed', sndOn ? 'true' : 'false');
+  }
+  paintSound();
+  soundBtn.addEventListener('click', function(){
+    sndOn = !sndOn;
+    try{ localStorage.setItem('ts.sound', sndOn ? '1' : '0'); }catch(e){}
+    paintSound();
+    if(sndOn){ audio(); sfx('tap'); toast('音效已开：点档案、下载会有声音'); }
+    else { toast('音效已关'); }
+  });
+
+  // ---------- 顶栏腰带充能条 ----------
+  var chargeBar = $('chargeBar'), chFrame = false;
+  function chargeUpdate(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - window.innerHeight;
+    var p = max > 4 ? (window.scrollY || h.scrollTop || 0) / max : 0;
+    chargeBar.style.width = Math.max(0, Math.min(1, p)) * 100 + '%';
+    chFrame = false;
+  }
+  window.addEventListener('scroll', function(){
+    if(chFrame) return;
+    chFrame = true;
+    requestAnimationFrame(chargeUpdate);
+  }, {passive:true});
+  window.addEventListener('resize', chargeUpdate, {passive:true});
+  chargeUpdate();
+
   // ---------- 顶部数据 ----------
   if(D.updated) $('upd').textContent = 'REV ' + String(D.updated).replace(/-/g,'.');
-  $('sWorks').textContent = (D.stats && D.stats.works) || series.length;
-  $('sFiles').textContent = (D.stats && D.stats.files) || 0;
-  $('sPlugin').textContent = (D.stats && D.stats.plugins) || 0;
+  function countUp(el, to){
+    if(!el) return;
+    var quiet = false;
+    try{ quiet = window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+    if(quiet || !to || to < 3){ el.textContent = to || 0; return; }
+    var t0 = 0;
+    function step(ts){
+      if(!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / 720);
+      el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3)));
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  countUp($('sWorks'), (D.stats && D.stats.works) || series.length);
+  countUp($('sFiles'), (D.stats && D.stats.files) || 0);
+  countUp($('sPlugin'), (D.stats && D.stats.plugins) || 0);
   $('footMeta').textContent = 'REV ' + (D.updated||'—') + ' ／ ' + series.length + ' WORKS ／ ' + ((D.stats&&D.stats.files)||0) + ' FILES';
 
   // ---------- 分类 ----------
@@ -1198,6 +1382,7 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
       var byTag = s.by ? '<span class="by">投稿 · '+esc(s.by)+'</span>' : '';
       return '<a class="card" href="?w='+encodeURIComponent(s.id)+'" data-id="'+esc(s.id)+'" style="--a:'+esc(s.accent||'#35E7FF')+'">'
         + '<span class="glow"></span>'
+        + '<span class="sheen"></span>'
         + '<span class="wm">'+GLYPH[s.cat]+'</span>'
         + '<span class="card-top"><span class="idx">'+codeOf(s)+'</span><span class="cat-tag">'+byTag+esc(catName(s.cat))+'</span></span>'
         + '<h3>'+esc(s.name)+'</h3>'
@@ -1242,6 +1427,7 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
     $('sheet').classList.add('open');
     $('sheet').setAttribute('aria-hidden','false');
     document.body.style.overflow = 'hidden';
+    sfx('open');
     if(history.replaceState) history.replaceState(null,'','?w='+encodeURIComponent(s.id));
     track(['_trackPageview', '/?w=' + s.id]);
   }
@@ -1249,6 +1435,7 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
     $('sheet').classList.remove('open');
     $('sheet').setAttribute('aria-hidden','true');
     document.body.style.overflow = '';
+    sfx('close');
     if(history.replaceState) history.replaceState(null,'',location.pathname);
     cur = null;
   }
@@ -1333,6 +1520,7 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
     $('reader').classList.add('open');
     $('reader').setAttribute('aria-hidden','false');
     document.body.style.overflow = 'hidden';
+    sfx('tap');
     track(['_trackEvent','阅读','设定', f.name]);
     fetch(encPath(f.path), {cache:'no-cache'}).then(function(r){
       if(!r.ok) throw new Error(r.status);
@@ -1448,7 +1636,7 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
   });
 
   $('sheetZip').addEventListener('click', function(){
-    if(cur) track(['_trackEvent','下载','作品包',cur.id]);
+    if(cur){ track(['_trackEvent','下载','作品包',cur.id]); sfx('load'); }
   });
   $('sheetShare').addEventListener('click', function(){
     if(!cur) return;
@@ -1561,6 +1749,7 @@ window.SITE_DATA = {"updated":"2026-11-25","site":"特摄同人 · 设定库","c
       $('bootLine').textContent = 'HENSHIN';
       $('flash').classList.add('on');
       $('bootLine').style.color = 'var(--hot)';
+      sfx('henshin');
     }, 620);
     setTimeout(function(){
       $('boot').classList.add('hide');
